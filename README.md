@@ -30,16 +30,7 @@ We personally realised we could only take some courses in year 4 now due to them
 13. [Software Engineering Practices](#software-engineering-practices)
 14. [Testing Plan](#testing-plan)
 15. [CI/CD Plan](#cicd-plan)
-16. [Weekly Development Timeline](#weekly-development-timeline)
-17. [Milestone Scope](#milestone-scope)
-18. [Risk Analysis](#risk-analysis)
-19. [Project Log](#project-log)
-20. [Setup Instructions](#setup-instructions)
-21. [Testing Commands](#testing-commands)
-22. [Deployment](#deployment)
-23. [Future Work](#future-work)
-24. [Team](#team)
-
+16. [Milestone Scope](#milestone-scope)
 ---
 
 ## Project Information
