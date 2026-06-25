@@ -1365,7 +1365,19 @@ flowchart TD
 
 ---
 
-## Planned GitHub Actions Workflow
+## GitHub Actions Workflow
+
+The repository includes a CI workflow at `.github/workflows/ci.yml`.
+The current workflow runs the checks available in `package.json`:
+
+* Install dependencies with `npm ci`.
+* Build the Next.js app with `npm run build`.
+
+After linting and testing tools are added to the project, expand the workflow with the planned checks:
+
+* `npm run lint`
+* `npm run test`
+* `npm run test:e2e`
 
 ```yaml
 name: CI
@@ -1379,7 +1391,7 @@ on:
       - main
 
 jobs:
-  test-and-build:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -1390,21 +1402,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Run linting
-        run: npm run lint
-
-      - name: Run unit and component tests
-        run: npm run test
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
-
-      - name: Run end-to-end tests
-        run: npm run test:e2e
 
       - name: Build project
         run: npm run build
@@ -1478,8 +1479,8 @@ Install:
 ## Clone Repository
 
 ```bash
-git clone [TODO: GitHub repository link]
-cd nus-tree
+git clone https://github.com/arav31/NUS-Tree.git
+cd NUS-Tree
 ```
 
 ## Install Dependencies
@@ -1502,28 +1503,32 @@ http://localhost:3000
 
 ---
 
-# Testing Commands
-
-## Run Linting
-
-```bash
-npm run lint
-```
-
-## Run Unit and Component Tests
-
-```bash
-npm run test
-```
-
-## Run End-to-End Tests
-
-```bash
-npm run test:e2e
-```
+# Verification Commands
 
 ## Run Production Build
 
 ```bash
 npm run build
+```
+
+## Planned Testing Commands
+
+These commands are part of the testing plan. Add the matching npm scripts and dependencies before enabling them in GitHub Actions.
+
+### Run Linting
+
+```bash
+npm run lint
+```
+
+### Run Unit and Component Tests
+
+```bash
+npm run test
+```
+
+### Run End-to-End Tests
+
+```bash
+npm run test:e2e
 ```
