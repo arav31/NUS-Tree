@@ -1,18 +1,34 @@
 export default function Home() {
   return (
     <main className="page">
+      {/* 1. Overview Section */}
       <section className="intro">
-        <p className="eyebrow">Next.js Starter</p>
-        <h1>NUS Tree</h1>
+        <h1>NUS Tree(🚧WIP🚧)</h1>
         <p className="summary">
-          Edit <code>app/page.js</code> to start building your app.
+          An interactive platform to visualize academic pathways and explore connections within the NUS ecosystem.
         </p>
-        <div className="actions" aria-label="Helpful links">
-          <a href="https://nextjs.org/docs" target="_blank" rel="noreferrer">
-            Read Docs
+      </section>
+
+      {/* 2. Getting Started Section */}
+      <section className="guide">
+        <h2>Getting Started (🚧 Work in Progress 🚧)</h2>
+        <p>Follow these steps to navigate the tree:</p>
+        <ul>
+          <li><strong>Explore:</strong> Browse nodes to see subject relationships.</li>
+          <li><strong>Customize:</strong> Use the sidebar to filter your specific major.</li>
+          <li><strong>Connect:</strong> Export your path to share with peers.</li>
+        </ul>
+      </section>
+
+      {/* 3. Resources Section */}
+      <section className="resources">
+        <h2>Resources (🚧 Work in Progress 🚧)</h2>
+        <div className="actions">
+          <a href="https://nusmods.com/courses?sem[0]=1&sem[1]=2&sem[2]=3&sem[3]=4" target="_blank" rel="noreferrer">
+            NUS Mods | Courses
           </a>
-          <a href="https://vercel.com/new" target="_blank" rel="noreferrer">
-            Deploy
+          <a href="https://www.comp.nus.edu.sg/programmes/ug/cs/curr/" target="_blank" rel="noreferrer">
+            CS Degree Requirments
           </a>
         </div>
       </section>

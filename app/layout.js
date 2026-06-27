@@ -1,14 +1,18 @@
 import './globals.css';
+import Navbar from '../components/Navbar';
 
 export const metadata = {
   title: 'NUS Tree',
-  description: 'Next.js starter app for NUS Tree',
+  description: 'NUS Tree, Node based full course planner',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        <main>{children}</main>
+      </body>
     </html>
   );
 }

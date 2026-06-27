@@ -89,6 +89,17 @@ h1 {
   color: #ffffff;
 }
 
+section {
+  margin-bottom: 3rem;
+  padding: 1rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
 @media (max-width: 560px) {
   h1 {
     font-size: 3rem;
