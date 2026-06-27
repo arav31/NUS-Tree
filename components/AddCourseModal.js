@@ -13,7 +13,7 @@ export default function AddCourseModal({ existingNodes, onClose, onAdd }) {
       code: formData.get('code'),
       name: formData.get('name'),
       color: formData.get('color'),
-      description: formData.get('description'), // Captured new field
+      description: formData.get('description'), 
       prereqs: prereqs
     });
   };
@@ -27,10 +27,9 @@ export default function AddCourseModal({ existingNodes, onClose, onAdd }) {
       <div style={{
         background: 'white', padding: '24px', borderRadius: '12px',
         width: '380px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-        position: 'relative' // Required for absolute positioning of X button
+        position: 'relative' 
       }}>
         
-        {/* Top Right Close Button */}
         <button 
           type="button" 
           onClick={onClose}
@@ -57,7 +56,6 @@ export default function AddCourseModal({ existingNodes, onClose, onAdd }) {
             <input name="name" placeholder="Introduction to AI and ML" style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }} />
           </div>
 
-          {/* New Description Field */}
           <div>
             <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '4px' }}>Description (Optional)</label>
             <textarea 

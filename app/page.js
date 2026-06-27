@@ -3,20 +3,28 @@ export default function Home() {
     <main className="page">
       {/* 1. Overview Section */}
       <section className="intro">
-        <h1>NUS Tree(🚧WIP🚧)</h1>
+        <h2>NUS Tree: Welcome to Your Academic Planner! 🥳 (🚧WIP🚧)</h2>
         <p className="summary">
-          An interactive platform to visualize academic pathways and explore connections within the NUS ecosystem.
+          Hello! We're here to help you map out your journey at the National University of Singapore. Whether you're planning your AI specialization or coordinating your minor, this tool is designed to make your academic path clear and manageable.
         </p>
       </section>
 
       {/* 2. Getting Started Section */}
       <section className="guide">
         <h2>Getting Started (🚧 Work in Progress 🚧)</h2>
-        <p>Follow these steps to navigate the tree:</p>
         <ul>
-          <li><strong>Explore:</strong> Browse nodes to see subject relationships.</li>
-          <li><strong>Customize:</strong> Use the sidebar to filter your specific major.</li>
-          <li><strong>Connect:</strong> Export your path to share with peers.</li>
+          <li><strong>Infinite Canvas:</strong> Pan and zoom using your mouse or trackpad to explore your entire roadmap freely.</li>
+          <li><strong>Auto-Alignment Engines:</strong> Use "Auto Topo Sort" to visualize dependencies or "Auto Align Grid" to keep your workspace tidy.</li>
+          <li><strong>Node Selection:</strong> Click any module or note to highlight it and reveal its details in the bottom panel.</li>
+          <li><strong>Adding Modules:</strong> Open the "Add Module" modal to input course details like code, name, description, and your target semester.</li>
+          <li><strong>Adding Notes:</strong> Create sticky notes to jot down reminders, internship deadlines, or general study tips.</li>
+          <li><strong>Dynamic Editing:</strong> You can update any course at any time. Just click a module and select "Edit" in the bottom panel to change details or reassign its semester.</li>
+          <li><strong>Smart Arrows:</strong> Arrows indicate prerequisites, showing you exactly what needs to be completed before moving forward.</li>
+          <li><strong>Dependency Spotlight:</strong> When you click a course, red animated arrows highlight your prerequisites, and green animated arrows show the future courses you are unlocking.</li>
+          <li><strong>Reset View:</strong> Click the empty background to clear your highlights and return to the full view.</li>
+          <li><strong>Semester Assignments:</strong> Assign each course to a specific semester (Y1S1 through Y4S2) to track your long-term progress.</li>
+          <li><strong>Study Plan Popup:</strong> Click "View Study Plan" to see a clean, organized table of your entire 4-year schedule.(🚧WIP🚧)</li>
+          <li><strong>Community Gallery:</strong> Visit the "Explore" page to browse, preview, and clone pre-made roadmaps—like the BComp AI Pathway—to get a head start.(🚧WIP🚧)</li>
         </ul>
       </section>
 

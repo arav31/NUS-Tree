@@ -143,10 +143,8 @@ export default function TreePage() {
     });
 
     setNodes(() => {
-      // 1. Layout Modules with GUARANTEED spacing
-      const X_SPACING = 300; // Force a massive horizontal gap
-      const Y_SPACING = 220; // Force a massive vertical gap
-
+      const X_SPACING = 300; 
+      const Y_SPACING = 220; 
       const mappedModules = modules.map(n => {
         const lvl = levels[n.id];
         const indexInLvl = levelGroups[lvl].indexOf(n.id);
@@ -162,7 +160,6 @@ export default function TreePage() {
         };
       });
 
-      // 2. Push all notes safely to the far right boundary
       const mappedNotes = notes.map((note, idx) => ({ 
         ...note, 
         position: { x: 1400, y: 80 + idx * 160 } 
@@ -172,12 +169,10 @@ export default function TreePage() {
     });
   };
 
-  // NEW: Non-Destructive Widest/Tallest Alternating Grid Alignment Engine
   const autoAlign = () => {
     setNodes((currentNodes) => {
       if (currentNodes.length === 0) return currentNodes;
 
-      // 1. Snapshot with exact centers and sizes
       let nodes = currentNodes.map(n => {
         const w = n.measured?.width || (n.type === 'note' ? 160 : 220);
         const h = n.measured?.height || (n.type === 'note' ? 120 : 80);
@@ -188,82 +183,70 @@ export default function TreePage() {
         };
       });
 
-      // --- PHASE 1: EXACT COLUMNS (X-AXIS) ---
       nodes.sort((a, b) => a.cx - b.cx); 
       let columns = [];
-      const TOLERANCE_X = 60; // Max pixels of human error when dragging. If centers are > 60px apart, they form a new column.
+      const TOLERANCE_X = 60; 
 
       nodes.forEach(n => {
         let lastCol = columns[columns.length - 1];
-        // We lock the base center to the FIRST node to prevent drifting
         if (lastCol && Math.abs(n.cx - lastCol.baseCx) <= TOLERANCE_X) {
           lastCol.nodes.push(n);
-          lastCol.w = Math.max(lastCol.w, n.w); // Track widest node for safe spacing
+          lastCol.w = Math.max(lastCol.w, n.w); 
         } else {
           columns.push({ baseCx: n.cx, w: n.w, nodes: [n] });
         }
       });
 
-      const GAP_X = 60; // Guaranteed minimum empty space between columns
+      const GAP_X = 60; 
       let placedColX = columns[0].baseCx;
 
       columns.forEach((col, i) => {
         if (i > 0) {
           let prevCol = columns[i - 1];
           let requiredDistance = (prevCol.w / 2) + GAP_X + (col.w / 2);
-          // Push column safely to the right if they would overlap
           placedColX = Math.max(col.baseCx, placedColX + requiredDistance);
         } else {
           placedColX = col.baseCx;
         }
         
-        // Apply perfectly centered X to all nodes in this column
         col.nodes.forEach(n => n.position.x = placedColX - (n.w / 2));
       });
 
-      // --- PHASE 2: EXACT ROWS (Y-AXIS) ---
       nodes.sort((a, b) => a.cy - b.cy);
       let rows = [];
-      const TOLERANCE_Y = 45; // Tightened to 45px. Rows will NOT merge unless they heavily overlap visually.
-
+      const TOLERANCE_Y = 45; 
       nodes.forEach(n => {
         let lastRow = rows[rows.length - 1];
         if (lastRow && Math.abs(n.cy - lastRow.baseCy) <= TOLERANCE_Y) {
           lastRow.nodes.push(n);
-          lastRow.h = Math.max(lastRow.h, n.h); // Track tallest node for safe spacing
+          lastRow.h = Math.max(lastRow.h, n.h); 
         } else {
           rows.push({ baseCy: n.cy, h: n.h, nodes: [n] });
         }
       });
 
-      const GAP_Y = 60; // Guaranteed minimum empty space between rows
+      const GAP_Y = 60; 
       let placedRowY = rows[0].baseCy;
 
       rows.forEach((row, i) => {
         if (i > 0) {
           let prevRow = rows[i - 1];
           let requiredDistance = (prevRow.h / 2) + GAP_Y + (row.h / 2);
-          // Push row safely downwards if they would overlap
           placedRowY = Math.max(row.baseCy, placedRowY + requiredDistance);
         } else {
           placedRowY = row.baseCy;
         }
         
-        // Apply perfectly centered Y to all nodes in this row
         row.nodes.forEach(n => n.position.y = placedRowY - (n.h / 2));
       });
 
-      // 3. Clean up the tracking properties before giving the data back to React Flow
       return nodes.map(({ w, h, cx, cy, ...n }) => n);
     });
   };
 
   useEffect(() => {
-    // We wait 100ms to allow React Flow to paint the DOM and calculate the true 
-    // heights of the text blocks before we snap everything into place.
     const initialLayoutTimer = setTimeout(() => {
       autoAlign(); 
-      // Note: You can change this to autoTopoSort() if you prefer the cascading tree look on load!
     }, 100);
 
     return () => clearTimeout(initialLayoutTimer);
@@ -273,7 +256,6 @@ export default function TreePage() {
     setEdges((currentEdges) => 
       currentEdges.map((edge) => {
         
-        // 1. If nothing is selected, return all arrows to the default state
         if (!selectedNode) {
           return { 
             ...edge, 
@@ -282,7 +264,6 @@ export default function TreePage() {
           };
         }
 
-        // 2. INCOMING ARROWS: What you need to take BEFORE this course
         if (edge.target === selectedNode.id) {
           return { 
             ...edge, 
