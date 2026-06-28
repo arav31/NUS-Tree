@@ -1,4 +1,27 @@
+'use client';
+import { useState } from 'react';
+
 export default function Home() {
+  const [code, setCode] = useState('CS2040S');
+  const [module, setModule] = useState(null);
+  const [error, setError] = useState('');
+
+  async function findModule(event) {
+    event.preventDefault();
+    setError('');
+    setModule(null);
+
+    const response = await fetch(`/api/module?code=${encodeURIComponent(code)}`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      setError(data.error || 'Module not found');
+      return;
+    }
+
+    setModule(data);
+  }
+
   return (
     <main className="page">
       {/* 1. Overview Section */}
@@ -39,6 +62,25 @@ export default function Home() {
             CS Degree Requirments
           </a>
         </div>
+        <form onSubmit={findModule}>
+          <label htmlFor="module-code">Module code</label>
+          <input
+            id="module-code"
+            value={code}
+            onChange={(event) => setCode(event.target.value)}
+            placeholder="CS2040S"
+          />
+          <button type="submit">Load from NUSMods</button>
+        </form>
+        {error && <p role="alert">{error}</p>}
+        {module && (
+          <article>
+            <h3>{module.moduleCode}: {module.title}</h3>
+            <p>{module.description}</p>
+            <p><strong>Prerequisite:</strong> {module.prerequisite || 'None'}</p>
+            <p><strong>Semesters:</strong> {module.semesterData.join(', ') || 'Not listed'}</p>
+          </article>
+        )}
       </section>
     </main>
   );
