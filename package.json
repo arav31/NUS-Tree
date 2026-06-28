@@ -12,6 +12,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "node --test tests/unit/*.test.js",
     "test:e2e": "playwright test"
   },
   "devDependencies": {
