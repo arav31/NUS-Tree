@@ -20,38 +20,8 @@ const nodeTypes = {
   note: NoteNode 
 };
 
-const initialNodes = [
-  { id: 'ma1522', type: 'module', position: { x: 50, y: 50 }, data: { courseCode: 'MA1522', courseName: 'Linear Algebra I', color: '#e0f7fa', description: 'Systems of linear equations, matrices, determinants, vectors, and linear transformations.' } },
-  { id: 'is1108', type: 'module', position: { x: 250, y: 50 }, data: { courseCode: 'IS1108', courseName: 'Digital Ethics and Data Privacy', color: '#e0f7fa', description: 'Ethical considerations and privacy issues in data analytics and software deployments.' } },
-  { id: 'cs2101', type: 'module', position: { x: 450, y: 50 }, data: { courseCode: 'CS2101*', courseName: 'Effective Communication', color: '#e0f7fa', description: '*Have to be taken in the same sem as CS2103T' } },
-  { id: 'ma1521', type: 'module', position: { x: 650, y: 50 }, data: { courseCode: 'MA1521', courseName: 'Calculus for Computing', color: '#e0f7fa', description: 'Functions, limits, derivatives, integrals, sequences, and series.' } },
-  { id: 'cs1231s', type: 'module', position: { x: 850, y: 50 }, data: { courseCode: 'CS1231S', courseName: 'Discrete Structures', color: '#e0f7fa', description: 'Mathematical logic, sets, relations, functions, and graph basics.' } },
-  { id: 'cs1010x', type: 'module', position: { x: 1050, y: 50 }, data: { courseCode: 'CS1010X', courseName: 'Programming Methodology', color: '#e0f7fa', description: 'Problem-solving using functional structures and programmatic abstractions.' } },
-  { id: 'st2334', type: 'module', position: { x: 600, y: 220 }, data: { courseCode: 'ST2334', courseName: 'Probability and Statistics', color: '#ffeb3b', description: 'Probability laws, random variables, expectations, sampling, estimation, and testing hypotheses.' } },
-  { id: 'cs2040s', type: 'module', position: { x: 850, y: 220 }, data: { courseCode: 'CS2040S', courseName: 'Data Structures and Algorithms', color: '#ffeb3b', description: 'Design, analysis, and implementation of algorithms and standard data structures.' } },
-  { id: 'cs2030s', type: 'module', position: { x: 1050, y: 220 }, data: { courseCode: 'CS2030S', courseName: 'Programming Methodology II', color: '#ffeb3b', description: 'Object-oriented programming and functional abstractions.' } },
-  { id: 'cs2100', type: 'module', position: { x: 1250, y: 220 }, data: { courseCode: 'CS2100', courseName: 'Computer Organisation', color: '#ffeb3b', description: 'Processor pipelines, memory organization, assembly arrays, and digital logic design.' } },
-  { id: 'cs2109s', type: 'module', position: { x: 650, y: 390 }, data: { courseCode: 'CS2109S', courseName: 'Introduction to AI and ML', color: '#f8bbd0', description: 'Search strategies, knowledge representation, machine learning basics, and neural structures.' } },
-  { id: 'cs3230', type: 'module', position: { x: 850, y: 390 }, data: { courseCode: 'CS3230', courseName: 'Design and Analysis of Algorithms', color: '#f8bbd0', description: 'Divide and conquer, greedy methods, dynamic programming, NP-completeness.' } },
-  { id: 'cs2103t', type: 'module', position: { x: 1050, y: 390 }, data: { courseCode: 'CS2103T*', courseName: 'Software Engineering', color: '#f8bbd0', description: '*Have to be taken in the same sem as CS2101' } },
-  { id: 'cs2106', type: 'module', position: { x: 1250, y: 390 }, data: { courseCode: 'CS2106', courseName: 'Introduction to Operating Systems', color: '#f8bbd0', description: 'Processes, threads, synchronization, memory management, and file systems.' } }
-];
-
-const initialEdges = [
-  { id: 'e-ma1521-st2334', source: 'ma1521', target: 'st2334', animated: 0 },
-  { id: 'e-ma1521-cs2109s', source: 'ma1521', target: 'cs2109s', animated: 0 },
-  { id: 'e-cs1231s-cs2109s', source: 'cs1231s', target: 'cs2109s', animated: 0 },
-  { id: 'e-cs1231s-cs3230', source: 'cs1231s', target: 'cs3230', animated: 0 },
-  { id: 'e-cs1231s-cs2040s', source: 'cs1231s', target: 'cs2040s', animated: 0 },
-  { id: 'e-cs1010x-cs2040s', source: 'cs1010x', target: 'cs2040s', animated: 0 },
-  { id: 'e-cs1010x-cs2030s', source: 'cs1010x', target: 'cs2030s', animated: 0 },
-  { id: 'e-cs1010x-cs2100', source: 'cs1010x', target: 'cs2100', animated: 0 },
-  { id: 'e-cs2040s-cs2109s', source: 'cs2040s', target: 'cs2109s', animated: 0 },
-  { id: 'e-cs2040s-cs3230', source: 'cs2040s', target: 'cs3230', animated: 0 },
-  { id: 'e-cs2040s-cs2103t', source: 'cs2040s', target: 'cs2103t', animated: 0 },
-  { id: 'e-cs2030s-cs2103t', source: 'cs2030s', target: 'cs2103t', animated: 0 },
-  { id: 'e-cs2100-cs2106', source: 'cs2100', target: 'cs2106', animated: 0 }
-];
+const initialNodes = [];
+const initialEdges = [];
 
 const defaultEdgeOptions = {
   style: { strokeWidth: 2, stroke: '#888' },
@@ -73,6 +43,9 @@ export default function TreePage() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
+  const [moduleCode, setModuleCode] = useState('CS2040S');
+  const [treeError, setTreeError] = useState('');
+  const [isLoadingTree, setIsLoadingTree] = useState(false);
 
   const startEdit = () => {
     setEditData(selectedNode.data); 
@@ -95,6 +68,42 @@ export default function TreePage() {
 
   const onPaneClick = () => {
     setSelectedNode(null);
+  };
+
+  const loadPrereqTree = async (event) => {
+    event.preventDefault();
+    const seen = new Map();
+    const nextEdges = [];
+    setTreeError('');
+    setIsLoadingTree(true);
+
+    const visit = async (code, depth = 0) => {
+      const id = code.trim().toUpperCase();
+      if (!id || seen.has(id) || seen.size >= 20) return seen.has(id);
+      const response = await fetch(`/api/module?code=${encodeURIComponent(id)}`);
+      if (!response.ok) return false;
+      const module = await response.json();
+      seen.set(id, {
+        id, type: 'module', position: { x: depth * 280, y: 80 + seen.size * 120 },
+        data: { courseCode: id, courseName: module.title, color: depth ? '#e0f7fa' : '#ffeb3b', description: module.description }
+      });
+      const prereqs = [...new Set((module.prerequisite || '').match(/[A-Z]{2,4}\d{4}[A-Z]?/g) || [])].slice(0, 10);
+      for (const prereq of prereqs) {
+        if (await visit(prereq, depth + 1)) {
+          nextEdges.push({ id: `${prereq}-${id}`, source: prereq, target: id });
+        }
+      }
+      return true;
+    };
+
+    if (await visit(moduleCode)) {
+      setNodes([...seen.values()]);
+      setEdges(nextEdges);
+      setSelectedNode(null);
+    } else {
+      setTreeError(`${moduleCode.toUpperCase()} was not found`);
+    }
+    setIsLoadingTree(false);
   };
 
   const semesterData = nodes
@@ -338,6 +347,12 @@ export default function TreePage() {
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: 'calc(100vh - 80px)' }}>
       <div style={{ flexGrow: 1, position: 'relative' }}>
         <div style={{ position: 'absolute', top: 20, right: 20, zIndex: 4, display: 'flex', gap: '10px' }}>
+          <form onSubmit={loadPrereqTree} style={{ display: 'flex', gap: '6px' }}>
+            <input value={moduleCode} onChange={(e) => setModuleCode(e.target.value)} aria-label="Module code" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ccc' }} />
+            <button type="submit" style={{ padding: '12px 18px', background: '#0070f3', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
+              {isLoadingTree ? 'Loading...' : 'Load Tree'}
+            </button>
+          </form>
           <button onClick={() => setIsModalOpen(true)} style={{ padding: '12px 24px', background: '#0070f3', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
             + Add Module
           </button>
@@ -345,6 +360,7 @@ export default function TreePage() {
             + Add Note
           </button>
         </div>
+        {treeError && <p role="alert" style={{ position: 'absolute', top: 78, right: 20, zIndex: 4, color: '#e02424' }}>{treeError}</p>}
 
         <ReactFlow 
           nodes={nodes} edges={edges} 
