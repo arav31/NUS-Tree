@@ -10,7 +10,7 @@ We decided to build NUS-Tree because we personally made some "mistakes" planning
 
 NUS-Tree helps you visualise the full path to any course you may potentially want to take, showing the full series of courses you would need to take in a glance. In addition, we also have a post requisite tree, letting you see what courses you have just unlocked with your previous course. Our overall goal with NUS-Tree is to make module planning easier to help students take more exciting courses through their school tenure.
 
-We personally realised we could only take some courses in year 4 now due to them dependencies and the some courses being semester 1 or semester 2 only. Seeing as this was a problem we faced, we thought it would be good to prevent others from facing the same issues in the future.
+We personally realised we could only take some courses in year 4 now due to their dependencies and the some courses being semester 1 or semester 2 only. Seeing as this was a problem we faced, we thought it would be good to prevent others from facing the same issues in the future.
 ---
 
 ## Table of Contents
