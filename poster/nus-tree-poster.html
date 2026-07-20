@@ -1,0 +1,411 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      width: 2384px;
+      height: 3370px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff;
+      color: #121212;
+    }
+    .poster {
+      width: 2384px;
+      height: 3370px;
+      padding: 78px 118px 82px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .header {
+      text-align: center;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin: 0;
+      color: #e3272f;
+      font-size: 164px;
+      line-height: .82;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+    .byline {
+      margin-top: 12px;
+      font-size: 34px;
+      font-weight: 800;
+    }
+    .subtitle {
+      margin: 24px auto 0;
+      border-top: 8px solid #ff8a9b;
+      padding-top: 22px;
+      max-width: 1740px;
+      font-size: 40px;
+      line-height: 1.22;
+      font-weight: 700;
+    }
+    .tree {
+      position: absolute;
+      top: 10px;
+      width: 150px;
+      height: 130px;
+      color: #111;
+    }
+    .tree.left { left: 130px; }
+    .tree.right { right: 130px; transform: scaleX(-1); }
+    svg { width: 100%; height: 100%; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.06fr .94fr;
+      gap: 28px;
+      margin-top: 22px;
+    }
+    .card {
+      border-radius: 26px;
+      padding: 34px 42px;
+      box-shadow: 0 10px 0 #00000010;
+    }
+    .teal { background: #0aa7b9; }
+    .orange { background: #ff7a1a; }
+    .green { background: #77da50; }
+    .purple { background: #6e20ff; color: #fff; }
+    .white {
+      background: #fff;
+      border: 8px solid #0b65a5;
+    }
+    .span2 { grid-column: 1 / -1; }
+    h2 {
+      margin: 0 0 18px;
+      font-size: 58px;
+      line-height: 1;
+      font-weight: 900;
+    }
+    p, li {
+      font-size: 31px;
+      line-height: 1.24;
+      margin: 0;
+    }
+    ul { margin: 0; padding-left: 42px; }
+    li { margin: 9px 0; }
+    b { font-weight: 900; }
+    .note {
+      display: inline-block;
+      transform: rotate(-1.5deg);
+      background: #fff6c8;
+      border: 5px solid #111;
+      padding: 12px 18px;
+      margin-bottom: 16px;
+      font-size: 29px;
+      font-weight: 900;
+    }
+    .explain {
+      margin-top: 12px;
+      max-width: 1900px;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+    }
+    .step {
+      min-height: 132px;
+      background: #fff;
+      border: 7px solid #111;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 22px;
+      font-size: 30px;
+      line-height: 1.12;
+      font-weight: 900;
+      position: relative;
+    }
+    .step:after {
+      content: ">";
+      position: absolute;
+      right: -22px;
+      top: 36px;
+      font-size: 42px;
+      font-weight: 900;
+      color: #111;
+      z-index: 1;
+    }
+    .step:last-child:after { content: ""; }
+    .demo {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .graph {
+      background: #f7fbff;
+      border: 8px solid #0b65a5;
+      border-radius: 20px;
+      min-height: 430px;
+      position: relative;
+      overflow: hidden;
+    }
+    .graph:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(#d7edf6 3px, transparent 3px),
+        linear-gradient(90deg, #d7edf6 3px, transparent 3px);
+      background-size: 74px 74px;
+    }
+    .node {
+      position: absolute;
+      width: 188px;
+      height: 78px;
+      border: 7px solid #0b65a5;
+      background: white;
+      border-radius: 14px;
+      font-size: 30px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .target {
+      border-color: #ff7a1a;
+      background: #fff1e5;
+      color: #a53700;
+    }
+    .edge {
+      position: absolute;
+      height: 8px;
+      background: #536b7d;
+      transform-origin: left center;
+      z-index: 1;
+    }
+    .edge:after {
+      content: "";
+      position: absolute;
+      right: -4px;
+      top: -11px;
+      border-left: 24px solid #536b7d;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+    }
+    .code {
+      border-radius: 20px;
+      background: #101827;
+      color: #e2ffe8;
+      padding: 32px;
+      font: 29px/1.36 Menlo, Consolas, monospace;
+      min-height: 430px;
+      white-space: pre-wrap;
+    }
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .mini {
+      background: #fff;
+      border-radius: 24px;
+      padding: 30px 34px;
+      border: 6px solid #111;
+    }
+    .mini h3 {
+      margin: 0 0 18px;
+      font-size: 42px;
+      line-height: 1;
+    }
+    .mini p, .mini li { font-size: 25px; line-height: 1.24; }
+    .roadmap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .road {
+      border-radius: 24px;
+      padding: 30px 34px;
+      min-height: 278px;
+      box-shadow: 0 10px 0 #00000010;
+    }
+    .road h3 {
+      margin: 0 0 14px;
+      font-size: 40px;
+      line-height: 1;
+    }
+    .road p, .road li { font-size: 25px; line-height: 1.24; }
+    .strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 22px;
+    }
+    .tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: flex-end;
+    }
+    .pill {
+      background: #111;
+      color: #fff;
+      border-radius: 999px;
+      padding: 17px 25px;
+      font-size: 34px;
+      font-weight: 900;
+    }
+    .footer {
+      position: absolute;
+      left: 118px;
+      right: 118px;
+      bottom: 44px;
+      height: 22px;
+      background: #c9c9c9;
+    }
+  </style>
+</head>
+<body>
+<main class="poster">
+  <header class="header">
+    <div class="tree left">
+      <svg viewBox="0 0 160 140">
+        <g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round">
+          <path d="M30 68 H112 M55 68 L92 36 M55 68 L92 100 M22 44 H54 M22 92 H54"/>
+          <circle cx="22" cy="44" r="14"/><circle cx="22" cy="92" r="14"/>
+          <circle cx="30" cy="68" r="14"/><circle cx="100" cy="34" r="14"/>
+          <circle cx="100" cy="102" r="14"/><circle cx="126" cy="68" r="14"/>
+        </g>
+      </svg>
+    </div>
+    <div class="tree right">
+      <svg viewBox="0 0 160 140">
+        <g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round">
+          <path d="M30 68 H112 M55 68 L92 36 M55 68 L92 100 M22 44 H54 M22 92 H54"/>
+          <circle cx="22" cy="44" r="14"/><circle cx="22" cy="92" r="14"/>
+          <circle cx="30" cy="68" r="14"/><circle cx="100" cy="34" r="14"/>
+          <circle cx="100" cy="102" r="14"/><circle cx="126" cy="68" r="14"/>
+        </g>
+      </svg>
+    </div>
+    <h1>NUS-TREE</h1>
+    <div class="byline">By: Arav Cabral & Raghuveer Singh</div>
+    <p class="subtitle">A visual dependency mapper for NUS modules. The current build connects to live NUSMods data, builds a prerequisite tree, and keeps the graph editable for planning.</p>
+  </header>
+
+  <section class="grid">
+    <article class="card teal">
+      <h2>The Problem</h2>
+      <p>Planning modules across multiple years is hard because students need the full prerequisite chain, not just the one line of prerequisite text shown for a single course. A student aiming for a higher-level module may only realise later that a Year 1 or Year 2 foundation module was needed. That mistake can affect exchange plans, specialisations, or graduation timing.</p>
+    </article>
+
+    <article class="card orange">
+      <h2>Current Solution</h2>
+      <p>NUS-Tree turns module planning into a graph. A student enters a module code, our Next.js API route fetches the matching NUSMods record, and My Tree expands the prerequisite modules it finds. The student can then inspect the dependency path visually instead of checking modules one by one.</p>
+    </article>
+
+    <article class="card green span2">
+      <span class="note">What is actually working right now</span>
+      <p class="explain">The prototype now uses real module data. It reads the selected target module, calls the backend route, normalizes the NUSMods response, extracts module codes from the prerequisite text, and recursively visits those modules until the graph is built.</p>
+      <div class="flow">
+        <div class="step">Type module code</div>
+        <div class="step">Call our API route</div>
+        <div class="step">Fetch NUSMods V2</div>
+        <div class="step">Recursively scan prereqs</div>
+        <div class="step">Render My Tree</div>
+      </div>
+    </article>
+
+    <article class="card white span2">
+      <h2>Live Demo: My Tree from CS2040S</h2>
+      <p class="explain">The tree view starts from a target module such as CS2040S. The yellow/orange target node is the module the student wants to take, and blue nodes are prerequisite modules discovered from NUSMods. Users can still pan, zoom, edit nodes, add notes, connect nodes manually, and auto-align the layout.</p>
+      <div class="demo">
+        <div class="graph">
+          <div class="edge" style="left:270px; top:128px; width:370px; transform:rotate(20deg);"></div>
+          <div class="edge" style="left:270px; top:304px; width:370px; transform:rotate(-20deg);"></div>
+          <div class="edge" style="left:625px; top:216px; width:300px; transform:rotate(0deg);"></div>
+          <div class="edge" style="left:590px; top:90px; width:340px; transform:rotate(22deg);"></div>
+          <div class="node" style="left:82px; top:92px;">CS1010</div>
+          <div class="node" style="left:82px; top:268px;">CS1010S</div>
+          <div class="node" style="left:452px; top:58px;">CS1101S</div>
+          <div class="node" style="left:466px; top:176px;">CS1231S</div>
+          <div class="node target" style="left:802px; top:176px;">CS2040S</div>
+        </div>
+        <div class="code">GET /api/module?code=CS2040S
+
+returns:
+moduleCode
+title
+description
+prerequisite
+semesterData
+
+Academic year is picked
+from the current date.</div>
+      </div>
+    </article>
+
+    <article class="card purple span2">
+      <div class="strip">
+        <div>
+          <h2>Built So Far</h2>
+          <p>Live NUSMods lookup is integrated on the home page and in My Tree. The backend chooses the academic year from the current date and returns a clean object with the module code, title, description, prerequisite text, and semester availability. The frontend uses React Flow so the generated graph remains interactive instead of being a static image.</p>
+        </div>
+        <div class="tech">
+          <span class="pill">Next.js</span>
+          <span class="pill">React Flow</span>
+          <span class="pill">NUSMods API</span>
+          <span class="pill">Playwright</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="span2 mini-grid">
+      <div class="mini">
+        <h3>What changed</h3>
+        <ul>
+          <li><b>My Tree is no longer hardcoded:</b> the graph is generated from the selected module code.</li>
+          <li><b>Home page lookup works:</b> users can load real NUSMods module details before exploring.</li>
+          <li><b>Errors are handled:</b> missing or invalid module codes return friendly messages instead of crashing.</li>
+          <li><b>Canvas tools remain:</b> editing, notes, manual links, and layout helpers still work with generated nodes.</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h3>Testing + CI</h3>
+        <ul>
+          <li><b>API tests:</b> check NUSMods response normalization, invalid modules, and missing module codes.</li>
+          <li><b>Academic year:</b> tests cover both the dynamic default year and explicit year override.</li>
+          <li><b>Browser tests:</b> Playwright smoke tests confirm the main pages and navigation still load.</li>
+          <li><b>CI workflow:</b> GitHub Actions runs install, unit tests, build, and browser checks.</li>
+        </ul>
+      </div>
+      <div class="mini">
+        <h3>Known limits + next</h3>
+        <ul>
+          <li><b>Logic parser:</b> distinguish AND requirements from OR alternatives instead of flattening them.</li>
+          <li><b>Multiple goals:</b> combine several Level 3000/4000 targets into one planning tree.</li>
+          <li><b>NUSMods import:</b> import a plan and validate prerequisites by semester order.</li>
+          <li><b>Unlocks View:</b> show what future modules become available after taking a module.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="span2 roadmap">
+      <div class="road teal">
+        <h3>Why this already helps</h3>
+        <p>The current prototype answers the first planning question: "What do I need before this module?" Instead of manually opening several NUSMods pages, students can generate a visual starting point, inspect the prerequisites, and then adjust the graph with notes or manual edits for their own plan.</p>
+      </div>
+      <div class="road orange">
+        <h3>Next build target</h3>
+        <p>The biggest remaining gap is prerequisite meaning. Some NUSMods text says "take all of these"; other text says "take one of these". The next version should preserve that distinction visually, then support multi-target trees and NUSMods plan import.</p>
+      </div>
+    </article>
+  </section>
+
+  <div class="footer"></div>
+</main>
+</body>
+</html>

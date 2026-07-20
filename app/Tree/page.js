@@ -80,12 +80,19 @@ export default function TreePage() {
     event.preventDefault();
     const seen = new Map();
     const nextEdges = [];
+    const rootCodes = [...new Set(moduleCode.toUpperCase().match(/[A-Z]{2,4}\d{4}[A-Z]?/g) || [])];
     setTreeError('');
     setIsLoadingTree(true);
 
+    if (!rootCodes.length) {
+      setTreeError('Enter at least one valid module code');
+      setIsLoadingTree(false);
+      return;
+    }
+
     const visit = async (code, depth = 0) => {
       const id = code.trim().toUpperCase();
-      if (!id || seen.has(id) || seen.size >= 20) return seen.has(id);
+      if (!id || seen.has(id) || seen.size >= 60) return seen.has(id);
       const response = await fetch(`/api/module?code=${encodeURIComponent(id)}`);
       if (!response.ok) return false;
       const module = await response.json();
@@ -94,7 +101,7 @@ export default function TreePage() {
         data: { courseCode: id, courseName: module.title, color: depth ? '#e0f7fa' : '#ffeb3b', description: module.description }
       });
       const prerequisiteText = module.prerequisite || '';
-      const prereqs = [...new Set(prerequisiteText.match(/[A-Z]{2,4}\d{4}[A-Z]?/g) || [])].slice(0, 10);
+      const prereqs = [...new Set(prerequisiteText.match(/[A-Z]{2,4}\d{4}[A-Z]?/g) || [])];
       const requirement = /\bor\b/i.test(prerequisiteText) ? 'any' : 'all';
       for (const prereq of prereqs) {
         //recurse through prereqs
@@ -105,12 +112,20 @@ export default function TreePage() {
       return true;
     };
 
-    if (await visit(moduleCode)) {
-      setNodes([...seen.values()]);
+    const failedCodes = [];
+    for (const code of rootCodes) {
+      if (!(await visit(code))) failedCodes.push(code);
+    }
+
+    if (seen.size) {
+      setNodes([...seen.values()].map(node => rootCodes.includes(node.id)
+        ? { ...node, data: { ...node.data, color: '#ffeb3b' } }
+        : node));
       setEdges(nextEdges);
       setSelectedNode(null);
+      if (failedCodes.length) setTreeError(`Could not load: ${failedCodes.join(', ')}`);
     } else {
-      setTreeError(`${moduleCode.toUpperCase()} was not found`);
+      setTreeError(`No modules found for: ${rootCodes.join(', ')}`);
     }
     setIsLoadingTree(false);
   };
@@ -359,9 +374,9 @@ export default function TreePage() {
       <div style={{ flexGrow: 1, position: 'relative' }}>
         <div style={{ position: 'absolute', top: 20, right: 20, zIndex: 4, display: 'flex', gap: '10px' }}>
           <form onSubmit={loadPrereqTree} style={{ display: 'flex', gap: '6px' }}>
-            <input value={moduleCode} onChange={(e) => setModuleCode(e.target.value)} aria-label="Module code" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ccc' }} />
+            <input value={moduleCode} onChange={(e) => setModuleCode(e.target.value)} aria-label="Module codes" placeholder="CS3210, CS4248" style={{ width: 190, padding: '10px', borderRadius: '8px', border: '1px solid #ccc' }} />
             <button type="submit" style={{ padding: '12px 18px', background: '#0070f3', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
-              {isLoadingTree ? 'Loading...' : 'Load Tree'}
+              {isLoadingTree ? 'Loading...' : 'Load Trees'}
             </button>
           </form>
           <button onClick={() => setIsModalOpen(true)} style={{ padding: '12px 24px', background: '#0070f3', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
