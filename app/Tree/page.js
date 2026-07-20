@@ -34,6 +34,11 @@ const defaultEdgeOptions = {
   },
 };
 
+const edgeStyle = (requirement, stroke = '#888', strokeWidth = 2) => ({
+  stroke, strokeWidth,
+  strokeDasharray: requirement === 'any' ? '8 6' : undefined,
+});
+
 export default function TreePage() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -43,7 +48,7 @@ export default function TreePage() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
-  const [moduleCode, setModuleCode] = useState('CS2040S');
+  const [moduleCode, setModuleCode] = useState('CS2040S'); //Prefill 2040
   const [treeError, setTreeError] = useState('');
   const [isLoadingTree, setIsLoadingTree] = useState(false);
 
@@ -70,16 +75,24 @@ export default function TreePage() {
     setSelectedNode(null);
   };
 
+  //Tree search algo
   const loadPrereqTree = async (event) => {
     event.preventDefault();
     const seen = new Map();
     const nextEdges = [];
+    const rootCodes = [...new Set(moduleCode.toUpperCase().match(/[A-Z]{2,4}\d{4}[A-Z]?/g) || [])];
     setTreeError('');
     setIsLoadingTree(true);
 
+    if (!rootCodes.length) {
+      setTreeError('Enter at least one valid module code');
+      setIsLoadingTree(false);
+      return;
+    }
+
     const visit = async (code, depth = 0) => {
       const id = code.trim().toUpperCase();
-      if (!id || seen.has(id) || seen.size >= 20) return seen.has(id);
+      if (!id || seen.has(id) || seen.size >= 60) return seen.has(id);
       const response = await fetch(`/api/module?code=${encodeURIComponent(id)}`);
       if (!response.ok) return false;
       const module = await response.json();
@@ -87,21 +100,32 @@ export default function TreePage() {
         id, type: 'module', position: { x: depth * 280, y: 80 + seen.size * 120 },
         data: { courseCode: id, courseName: module.title, color: depth ? '#e0f7fa' : '#ffeb3b', description: module.description }
       });
-      const prereqs = [...new Set((module.prerequisite || '').match(/[A-Z]{2,4}\d{4}[A-Z]?/g) || [])].slice(0, 10);
+      const prerequisiteText = module.prerequisite || '';
+      const prereqs = [...new Set(prerequisiteText.match(/[A-Z]{2,4}\d{4}[A-Z]?/g) || [])];
+      const requirement = /\bor\b/i.test(prerequisiteText) ? 'any' : 'all';
       for (const prereq of prereqs) {
+        //recurse through prereqs
         if (await visit(prereq, depth + 1)) {
-          nextEdges.push({ id: `${prereq}-${id}`, source: prereq, target: id });
+          nextEdges.push({ id: `${prereq}-${id}`, source: prereq, target: id, data: { requirement }, style: edgeStyle(requirement) });
         }
       }
       return true;
     };
 
-    if (await visit(moduleCode)) {
-      setNodes([...seen.values()]);
+    const failedCodes = [];
+    for (const code of rootCodes) {
+      if (!(await visit(code))) failedCodes.push(code);
+    }
+
+    if (seen.size) {
+      setNodes([...seen.values()].map(node => rootCodes.includes(node.id)
+        ? { ...node, data: { ...node.data, color: '#ffeb3b' } }
+        : node));
       setEdges(nextEdges);
       setSelectedNode(null);
+      if (failedCodes.length) setTreeError(`Could not load: ${failedCodes.join(', ')}`);
     } else {
-      setTreeError(`${moduleCode.toUpperCase()} was not found`);
+      setTreeError(`No modules found for: ${rootCodes.join(', ')}`);
     }
     setIsLoadingTree(false);
   };
@@ -269,7 +293,7 @@ export default function TreePage() {
           return { 
             ...edge, 
             animated: false, 
-            style: { strokeWidth: 2, stroke: '#888' } 
+            style: edgeStyle(edge.data?.requirement)
           };
         }
 
@@ -277,7 +301,7 @@ export default function TreePage() {
           return { 
             ...edge, 
             animated: true, 
-            style: { strokeWidth: 3, stroke: '#ef4444' } // Bold Red
+            style: edgeStyle(edge.data?.requirement, '#ef4444', 3) // Bold Red
           };
         }
 
@@ -286,7 +310,7 @@ export default function TreePage() {
           return { 
             ...edge, 
             animated: true, 
-            style: { strokeWidth: 3, stroke: '#22c55e' } // Bold Green
+            style: edgeStyle(edge.data?.requirement, '#22c55e', 3) // Bold Green
           };
         }
 
@@ -294,7 +318,7 @@ export default function TreePage() {
         return { 
           ...edge, 
           animated: false, 
-          style: { strokeWidth: 1, stroke: '#e5e7eb' } // Faint Gray
+          style: edgeStyle(edge.data?.requirement, '#e5e7eb', 1) // Faint Gray
         };
       })
     );
@@ -316,7 +340,9 @@ export default function TreePage() {
 
     const newEdges = newCourseData.prereqs.map(prereqId => ({
       id: `edge-${prereqId}-${newNodeId}`,
-      source: prereqId, target: newNodeId 
+      source: prereqId, target: newNodeId,
+      data: { requirement: newCourseData.requirement },
+      style: edgeStyle(newCourseData.requirement)
     }));
 
     setNodes((nds) => [...nds, newNode]);
@@ -348,9 +374,9 @@ export default function TreePage() {
       <div style={{ flexGrow: 1, position: 'relative' }}>
         <div style={{ position: 'absolute', top: 20, right: 20, zIndex: 4, display: 'flex', gap: '10px' }}>
           <form onSubmit={loadPrereqTree} style={{ display: 'flex', gap: '6px' }}>
-            <input value={moduleCode} onChange={(e) => setModuleCode(e.target.value)} aria-label="Module code" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ccc' }} />
+            <input value={moduleCode} onChange={(e) => setModuleCode(e.target.value)} aria-label="Module codes" placeholder="CS3210, CS4248" style={{ width: 190, padding: '10px', borderRadius: '8px', border: '1px solid #ccc' }} />
             <button type="submit" style={{ padding: '12px 18px', background: '#0070f3', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
-              {isLoadingTree ? 'Loading...' : 'Load Tree'}
+              {isLoadingTree ? 'Loading...' : 'Load Trees'}
             </button>
           </form>
           <button onClick={() => setIsModalOpen(true)} style={{ padding: '12px 24px', background: '#0070f3', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
@@ -361,6 +387,11 @@ export default function TreePage() {
           </button>
         </div>
         {treeError && <p role="alert" style={{ position: 'absolute', top: 78, right: 20, zIndex: 4, color: '#e02424' }}>{treeError}</p>}
+
+        <div aria-label="Prerequisite legend" style={{ position: 'absolute', top: 20, left: 20, zIndex: 4, background: 'rgba(255,255,255,0.92)', padding: '10px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '0.8rem', lineHeight: 1.8 }}>
+          <div><span style={{ display: 'inline-block', width: 30, borderTop: '2px solid #666', marginRight: 8 }} />ALL required</div>
+          <div><span style={{ display: 'inline-block', width: 30, borderTop: '2px dashed #666', marginRight: 8 }} />ANY one</div>
+        </div>
 
         <ReactFlow 
           nodes={nodes} edges={edges} 

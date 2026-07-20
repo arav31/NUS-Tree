@@ -15,10 +15,9 @@ export default function Home() {
     const data = await response.json();
 
     if (!response.ok) {
-      setError(data.error || 'Module not found');
+      setError(data.error || 'No such module, are you searching for an NTU Mod?');
       return;
     }
-
     setModule(data);
   }
 

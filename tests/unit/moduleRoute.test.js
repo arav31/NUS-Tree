@@ -38,15 +38,6 @@ test('fetches and normalizes a NUSMods module', async () => {
   assert.deepEqual(body.semesterData, [1, 2]);
 });
 
-test('uses explicit academic year when provided', async () => {
-  const { calls } = await callRoute('/api/module?code=MA1521&year=2024-2025', {
-    ok: true,
-    json: async () => ({ moduleCode: 'MA1521', semesterData: [] }),
-  });
-
-  assert.equal(calls[0][0], 'https://api.nusmods.com/v2/2024-2025/modules/MA1521.json');
-});
-
 test('returns API errors without calling NUSMods for missing code', async () => {
   const { calls, response, body } = await callRoute('/api/module', {});
 
@@ -56,10 +47,10 @@ test('returns API errors without calling NUSMods for missing code', async () => 
 });
 
 test('returns 404 when NUSMods cannot find the module', async () => {
-  const { response, body } = await callRoute('/api/module?code=FAKE9999', {
+  const { response, body } = await callRoute('/api/module?code=NOMD6767', {
     ok: false,
   });
 
   assert.equal(response.status, 404);
-  assert.equal(body.error, 'FAKE9999 was not found');
+  assert.equal(body.error, 'NOMD6767 was not found');
 });

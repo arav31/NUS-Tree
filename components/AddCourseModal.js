@@ -14,7 +14,8 @@ export default function AddCourseModal({ existingNodes, onClose, onAdd }) {
       name: formData.get('name'),
       color: formData.get('color'),
       description: formData.get('description'), 
-      prereqs: prereqs
+      prereqs: prereqs,
+      requirement: formData.get('requirement')
     });
   };
 
@@ -78,6 +79,14 @@ export default function AddCourseModal({ existingNodes, onClose, onAdd }) {
                   {node.data.courseCode}
                 </option>
               ))}
+            </select>
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '4px' }}>Prerequisite Rule</label>
+            <select name="requirement" defaultValue="all" style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}>
+              <option value="all">All selected modules required</option>
+              <option value="any">Any one selected module</option>
             </select>
           </div>
 
