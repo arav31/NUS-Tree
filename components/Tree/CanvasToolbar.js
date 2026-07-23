@@ -1,5 +1,5 @@
 export default function CanvasToolbar({
-  moduleCode, onModuleCodeChange, onSubmit, isLoadingTree, treeError, onOpenAddModule, onAddNote
+  moduleCode, onModuleCodeChange, onSubmit, isLoadingTree, treeError, onAddNote
 }) {
   return (
     <>
@@ -16,9 +16,6 @@ export default function CanvasToolbar({
             {isLoadingTree ? 'Loading...' : '+ Load Module from NUSMods'}
           </button>
         </form>
-        <button onClick={onOpenAddModule} className="tree-btn tree-btn-primary">
-          + Add Module Manually
-        </button>
         <button onClick={onAddNote} className="tree-btn tree-btn-dark">
           + Add Note
         </button>

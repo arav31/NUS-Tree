@@ -28,14 +28,17 @@ test('opens the Explore gallery', async ({ page }) => {
 test('opens the Tree workspace controls', async ({ page }) => {
   await page.goto('/Tree');
 
-  await expect(
-    page.getByRole('button', { name: '+ Add Module' }),
-  ).toBeVisible();
   await expect(page.getByRole('button', { name: '+ Add Note' })).toBeVisible();
   await expect(
     page.getByRole('button', { name: /Auto Arrange/ }),
   ).toBeVisible();
   await expect(
     page.getByRole('button', { name: /Auto Align Grid/ }),
+  ).toBeVisible();
+
+  // "+ Add Module Manually" lives behind the More menu now.
+  await page.getByRole('button', { name: /More/ }).click();
+  await expect(
+    page.getByRole('button', { name: '+ Add Module' }),
   ).toBeVisible();
 });

@@ -25,14 +25,48 @@
   gap: 6px;
 }
 
-/* Data toolbar (top-left, where the legend used to sit) */
-.tree-data-toolbar {
+/* More menu (top-left, where the legend used to sit) */
+.tree-more-menu {
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 4;
+  z-index: 5;
+}
+
+.tree-more-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  min-width: 200px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  padding: 6px;
+  gap: 2px;
+}
+
+.tree-more-item {
+  text-align: left;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.tree-more-item:hover {
+  background: #f3f4f6;
+}
+
+.tree-more-item-danger {
+  color: #e02424;
 }
 
 .tree-hidden-input {

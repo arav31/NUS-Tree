@@ -18,7 +18,7 @@ import { usePrereqTree } from '../../hooks/usePrereqTree';
 import { useEdgeHighlighting } from '../../hooks/useEdgeHighlighting';
 import { useTreePersistence } from '../../hooks/useTreePersistence';
 import CanvasToolbar from '../../components/Tree/CanvasToolbar';
-import DataToolbar from '../../components/Tree/DataToolbar';
+import MoreMenu from '../../components/Tree/MoreMenu';
 import LayoutToolbar from '../../components/Tree/LayoutToolbar';
 import DetailPanel from '../../components/Tree/DetailPanel';
 import PrereqChoiceModal from '../../components/Tree/PrereqChoiceModal';
@@ -156,7 +156,12 @@ export default function TreePage() {
   return (
     <div className="tree-page">
       <div className="tree-canvas-wrap">
-        <DataToolbar onExport={handleExport} onImport={handleImport} onClear={handleClearTree} />
+        <MoreMenu
+          onOpenAddModule={() => setIsModalOpen(true)}
+          onExport={handleExport}
+          onImport={handleImport}
+          onClear={handleClearTree}
+        />
 
         <CanvasToolbar
           moduleCode={moduleCode}
@@ -164,7 +169,6 @@ export default function TreePage() {
           onSubmit={loadPrereqTree}
           isLoadingTree={isLoadingTree}
           treeError={treeError}
-          onOpenAddModule={() => setIsModalOpen(true)}
           onAddNote={handleAddNote}
         />
 
