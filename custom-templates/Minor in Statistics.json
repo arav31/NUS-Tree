@@ -1,0 +1,125 @@
+{
+  "title": "Minor in Statistics",
+  "description": "A short path from calculus into core statistics modules, with an alternate entry point.",
+  "tags": ["Statistics", "Minor"],
+  "nodes": [
+    {
+      "id": "MA1521",
+      "type": "module",
+      "position": {
+        "x": 450,
+        "y": 80
+      },
+      "data": {
+        "courseCode": "MA1521",
+        "courseName": "Calculus for Computing",
+        "color": "#e0f7fa",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y1S1"
+      },
+      "measured": {
+        "width": 177,
+        "height": 68
+      }
+    },
+    {
+      "id": "ST2131",
+      "type": "module",
+      "position": {
+        "x": 600,
+        "y": 300
+      },
+      "data": {
+        "courseCode": "ST2131",
+        "courseName": "Probability",
+        "color": "#e0f7fa",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y1S2"
+      },
+      "measured": {
+        "width": 160,
+        "height": 68
+      }
+    },
+    {
+      "id": "ST3131",
+      "type": "module",
+      "position": {
+        "x": 600,
+        "y": 520
+      },
+      "data": {
+        "courseCode": "ST3131",
+        "courseName": "Regression Analysis",
+        "color": "#e0f7fa",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y2S1"
+      },
+      "measured": {
+        "width": 160,
+        "height": 68
+      }
+    },
+    {
+      "id": "MA1101R",
+      "type": "module",
+      "position": {
+        "x": 750,
+        "y": 80
+      },
+      "data": {
+        "courseCode": "MA1101R",
+        "courseName": "Linear Algebra I",
+        "color": "#e0f7fa",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y1S1"
+      },
+      "measured": {
+        "width": 160,
+        "height": 68
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "MA1521-ST2131",
+      "source": "MA1521",
+      "target": "ST2131",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "MA1101R-ST2131",
+      "source": "MA1101R",
+      "target": "ST2131",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "ST2131-ST3131",
+      "source": "ST2131",
+      "target": "ST3131",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      }
+    }
+  ]
+}
