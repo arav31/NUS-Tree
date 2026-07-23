@@ -15,7 +15,8 @@ export default function AddCourseModal({ existingNodes, onClose, onAdd }) {
       color: formData.get('color'),
       description: formData.get('description'), 
       prereqs: prereqs,
-      requirement: formData.get('requirement')
+      requirement: formData.get('requirement'),
+      semester: formData.get('semester')
     });
   };
 
