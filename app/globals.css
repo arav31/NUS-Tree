@@ -15,9 +15,7 @@ body {
 }
 
 body {
-  background:
-    linear-gradient(135deg, rgba(31, 148, 112, 0.12), transparent 34rem),
-    #f7f7f4;
+  background: #f7f7f4;
 }
 
 a {
