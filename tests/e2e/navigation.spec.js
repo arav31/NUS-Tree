@@ -5,12 +5,12 @@ test('loads the home page and primary navigation', async ({ page }) => {
 
   await expect(
     page.getByRole('heading', {
-      name: /NUS Tree: Welcome to Your Academic Planner/i,
+      name: /Plan your NUS degree, visually/i,
     }),
   ).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'My Tree' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Explore' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'My Tree', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Explore', exact: true })).toBeVisible();
 });
 
 test('opens the Explore gallery', async ({ page }) => {
