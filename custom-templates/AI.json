@@ -1,0 +1,454 @@
+{
+  "title": "BComp AI Pathway",
+  "description": "A standard AI specialization track through the CS core and machine learning modules.",
+  "tags": ["CS", "AI", "Machine Learning"],
+  "nodes": [
+    {
+      "id": "CS1010S",
+      "type": "module",
+      "position": {
+        "x": -150,
+        "y": 80
+      },
+      "data": {
+        "courseCode": "CS1010S",
+        "courseName": "Programming Methodology",
+        "color": "#ffeb3b",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y1S1"
+      },
+      "measured": {
+        "width": 198,
+        "height": 67
+      }
+    },
+    {
+      "id": "MA1521",
+      "type": "module",
+      "position": {
+        "x": 150,
+        "y": 80
+      },
+      "data": {
+        "courseCode": "MA1521",
+        "courseName": "Calculus for Computing",
+        "color": "#e0f7fa",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y1S1"
+      },
+      "measured": {
+        "width": 176,
+        "height": 67
+      }
+    },
+    {
+      "id": "MA1522",
+      "type": "module",
+      "position": {
+        "x": 424,
+        "y": 80
+      },
+      "data": {
+        "courseCode": "MA1522",
+        "courseName": "Linear Algebra for Computing",
+        "color": "#ffeb3b",
+        "description": "This course is targeted at students from School of Computing. It introduces basic concepts in linear algebra that are routinely applied in computer science, in the context of the Euclidean spaces, and will develop basic skills in computing with vectors and matrices with and without using computational software (MATLAB). Students are expected to acquire computational facilities and geometric intuition about vectors and matrices. Major topics: Systems of linear equations, matrices, determinants, Euclidean spaces, linear combinations and linear span, subspaces, linear independence, bases and dimension, rank of a matrix, inner products, eigenvalues and eigenvectors, diagonalisation, linear transformations between Euclidean spaces, applications."
+      },
+      "measured": {
+        "width": 212,
+        "height": 67
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS1231S",
+      "type": "module",
+      "position": {
+        "x": 1097.5,
+        "y": 80
+      },
+      "data": {
+        "courseCode": "CS1231S",
+        "courseName": "Discrete Structures",
+        "color": "#e0f7fa",
+        "description": "This course introduces mathematical tools required in the study of computer science. Topics include: (1) Logic and proof techniques: propositions, conditionals, quantifications. (2) Relations and Functions: Equivalence relations and partitions. Partially ordered sets. Well-Ordering Principle. Function equality. Boolean/identity/inverse functions. Bijection. (3) Mathematical formulation of data models (linear model, trees, graphs). (4) Counting and Combinatoric: Pigeonhole Principle. Inclusion-Exclusion Principle. Number of relations on a set, number of injections from one finite set to another, Diagonalization proof: An infinite countable set has an uncountable power set; Algorithmic proof: An infinite set has a countably infinite subset. Subsets of countable sets are countable."
+      },
+      "measured": {
+        "width": 160,
+        "height": 67
+      }
+    },
+    {
+      "id": "MA1511",
+      "type": "module",
+      "position": {
+        "x": 1342.5,
+        "y": 80
+      },
+      "data": {
+        "courseCode": "MA1511",
+        "courseName": "Engineering Calculus",
+        "color": "#e0f7fa",
+        "description": "This is a seven-week course specially designed for students majoring in Engineering. It introduces the basic concepts in one variable and several variable calculus with applications in engineering. Main topics: One variable calculus. Power series. Partial differentiation. Multiple integrals. Vector Calculus."
+      },
+      "measured": {
+        "width": 163,
+        "height": 67
+      },
+      "selected": false
+    },
+    {
+      "id": "MA1512",
+      "type": "module",
+      "position": {
+        "x": 1565.5,
+        "y": 80
+      },
+      "data": {
+        "courseCode": "MA1512",
+        "courseName": "Differential Equations for Engineering",
+        "color": "#e0f7fa",
+        "description": "This is a seven-week course specially designed for students majoring in Engineering. It introduces the basic concepts in the study of differential equations, with an emphasis on applications in engineering and other fields. Major topics include modelling with differential equations, first-order ordinary differential equations, higher-order linear differential equations, the Laplace transform, and partial differential equations."
+      },
+      "measured": {
+        "width": 260,
+        "height": 67
+      }
+    },
+    {
+      "id": "CS2040S",
+      "type": "module",
+      "position": {
+        "x": 418.5,
+        "y": 300
+      },
+      "data": {
+        "courseCode": "CS2040S",
+        "courseName": "Data Structures and Algorithms",
+        "color": "#e0f7fa",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y1S2"
+      },
+      "measured": {
+        "width": 223,
+        "height": 67
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "ST2334",
+      "type": "module",
+      "position": {
+        "x": 1086,
+        "y": 300
+      },
+      "data": {
+        "courseCode": "ST2334",
+        "courseName": "Probability and Statistics",
+        "color": "#ffeb3b",
+        "description": "This course introduces students to basic probability theory and statistical inference. Topics include basic concepts of probability, conditional probability, independence, random variables, joint and marginal distributions, mean and variance, some common probability distributions, sampling distributions, estimation and hypothesis testing based on a normal population."
+      },
+      "measured": {
+        "width": 183,
+        "height": 67
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS2109S",
+      "type": "module",
+      "position": {
+        "x": 392.5,
+        "y": 520
+      },
+      "data": {
+        "courseCode": "CS2109S",
+        "courseName": "Introduction to AI and Machine Learning",
+        "color": "#e0f7fa",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y2S1"
+      },
+      "measured": {
+        "width": 275,
+        "height": 67
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "ST2132",
+      "type": "module",
+      "position": {
+        "x": 1090.5,
+        "y": 520
+      },
+      "data": {
+        "courseCode": "ST2132",
+        "courseName": "Mathematical Statistics",
+        "color": "#e0f7fa",
+        "description": "This course introduces students to the theoretical underpinnings of statistical methodology and concentrates on inferential procedures within the framework of parametric models. Topic include: random sample and statistics, method of moments, maximum likelihood estimate, Fisher information, sufficiency and completeness, consistency and unbiasedness, sampling distributions, x2-, t- and Fdistributions, confidence intervals, exact and asymptotic pivotal method, concepts of hypothesis testing, likelihood ratio test, Neyman-Pearson lemma. This course is targeted at students who are interested in Statistic and are able to meet the prerequisite."
+      },
+      "measured": {
+        "width": 174,
+        "height": 67
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS3244",
+      "type": "module",
+      "position": {
+        "x": 450,
+        "y": 740
+      },
+      "data": {
+        "courseCode": "CS3244",
+        "courseName": "Machine Learning",
+        "color": "#e0f7fa",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y2S2"
+      },
+      "measured": {
+        "width": 160,
+        "height": 67
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS2251",
+      "type": "module",
+      "position": {
+        "x": 1072.5,
+        "y": 740
+      },
+      "data": {
+        "courseCode": "CS2251",
+        "courseName": "Optimization and Regression",
+        "color": "#ffeb3b",
+        "description": "This course provides a comprehensive introduction to the mathematical and theoretical foundations of optimization and regression, which are central to modern artificial intelligence. Students will learn to formulate and analyze mathematical models for regression and model selection, gaining an understanding of the statistical properties of estimators and the structure of linear models. Students will also explore a variety of gradient-based optimization techniques, including gradient descent and stochastic gradient descent. The course provides essential background for advanced study and research in machine learning and artificial intelligence."
+      },
+      "measured": {
+        "width": 210,
+        "height": 67
+      },
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "CS4243",
+      "type": "module",
+      "position": {
+        "x": 727.5,
+        "y": 960
+      },
+      "data": {
+        "courseCode": "CS4243",
+        "courseName": "Computer Vision and Pattern Recognition",
+        "color": "#e0f7fa",
+        "textColor": "#111827",
+        "description": "",
+        "semester": "Y3S1"
+      },
+      "measured": {
+        "width": 285,
+        "height": 67
+      },
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "CS1010S-CS2040S",
+      "source": "CS1010S",
+      "target": "CS2040S",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2040S-CS2109S",
+      "source": "CS2040S",
+      "target": "CS2109S",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1521-CS2109S",
+      "source": "MA1521",
+      "target": "CS2109S",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2109S-CS3244",
+      "source": "CS2109S",
+      "target": "CS3244",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS3244-CS4243",
+      "source": "CS3244",
+      "target": "CS4243",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1521-ST2334",
+      "source": "MA1521",
+      "target": "ST2334",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1522-CS2251",
+      "source": "MA1522",
+      "target": "CS2251",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS1231S-CS2251",
+      "source": "CS1231S",
+      "target": "CS2251",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1521-CS2251",
+      "source": "MA1521",
+      "target": "CS2251",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1511-CS2251",
+      "source": "MA1511",
+      "target": "CS2251",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1512-CS2251",
+      "source": "MA1512",
+      "target": "CS2251",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "ST2334-CS2251",
+      "source": "ST2334",
+      "target": "CS2251",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "ST2334-ST2132",
+      "source": "ST2334",
+      "target": "ST2132",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "ST2132-CS2251",
+      "source": "ST2132",
+      "target": "CS2251",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    }
+  ]
+}
