@@ -1,7 +1,7 @@
 'use client';
 import { useRef } from 'react';
 
-export default function DataToolbar({ onExport, onImport }) {
+export default function DataToolbar({ onExport, onImport, onClear }) {
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
@@ -17,6 +17,9 @@ export default function DataToolbar({ onExport, onImport }) {
       </button>
       <button onClick={() => fileInputRef.current.click()} className="tree-btn tree-btn-dark">
         Import JSON
+      </button>
+      <button onClick={onClear} className="tree-remove-btn">
+        Clear Tree
       </button>
       <input
         ref={fileInputRef}

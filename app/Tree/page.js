@@ -91,6 +91,15 @@ export default function TreePage() {
     }
   };
 
+  const handleClearTree = () => {
+    if (nodes.length === 0) return;
+    if (!window.confirm('This will permanently clear your current tree. Continue?')) return;
+    setNodes([]);
+    setEdges([]);
+    setSelectedNode(null);
+    setIsEditing(false);
+  };
+
   const handleAddCourse = (newCourseData) => {
     const newNodeId = `node-${Date.now()}`;
     const newNode = {
@@ -146,7 +155,7 @@ export default function TreePage() {
   return (
     <div className="tree-page">
       <div className="tree-canvas-wrap">
-        <DataToolbar onExport={handleExport} onImport={handleImport} />
+        <DataToolbar onExport={handleExport} onImport={handleImport} onClear={handleClearTree} />
 
         <CanvasToolbar
           moduleCode={moduleCode}
