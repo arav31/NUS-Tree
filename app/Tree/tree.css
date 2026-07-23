@@ -149,6 +149,19 @@
   padding: 8px;
 }
 
+.tree-edit-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.tree-edit-color {
+  width: 100%;
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .tree-edit-textarea {
   padding: 8px;
   height: 50px;

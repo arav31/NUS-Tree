@@ -15,10 +15,10 @@ export default function ModuleNode({ data }) {
       {/* Top Handle for incoming prerequisite arrows */}
       <Handle type="target" position={Position.Top} style={{ width: '10px', height: '10px' }} />
       
-      <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px' }}>
+      <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px', color: data.textColor || '#111827' }}>
         {data.courseCode}
       </div>
-      <div style={{ fontSize: '0.85rem', color: '#444' }}>
+      <div style={{ fontSize: '0.85rem', color: data.textColor || '#444' }}>
         {data.courseName}
       </div>
       

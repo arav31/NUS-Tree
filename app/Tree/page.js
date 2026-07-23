@@ -35,7 +35,7 @@ export default function TreePage() {
     usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode });
 
   const startEdit = () => {
-    setEditData(selectedNode.data);
+    setEditData({ color: '#e0f7fa', textColor: '#111827', ...selectedNode.data });
     setIsEditing(true);
   };
 
@@ -80,6 +80,7 @@ export default function TreePage() {
         courseCode: newCourseData.code,
         courseName: newCourseData.name,
         color: newCourseData.color,
+        textColor: newCourseData.textColor,
         description: newCourseData.description || '',
         semester: newCourseData.semester
       }
@@ -150,6 +151,7 @@ export default function TreePage() {
       </div>
 
       <DetailPanel
+        nodes={nodes}
         selectedNode={selectedNode}
         isEditing={isEditing}
         editData={editData}

@@ -1,10 +1,19 @@
 'use client';
+import { useState } from 'react';
+import ColorSelect from './ColorSelect';
 
 export default function AddCourseModal({ existingNodes, onClose, onAdd }) {
+  const [color, setColor] = useState('#e0f7fa');
+  const [textColor, setTextColor] = useState('#111827');
+
+  const moduleNodes = existingNodes.filter(n => n.type === 'module');
+  const existingColors = moduleNodes.map(n => n.data.color);
+  const existingTextColors = moduleNodes.map(n => n.data.textColor);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    
+
     // Extract selected prerequisite IDs
     const prereqSelect = e.target.prereqs;
     const prereqs = Array.from(prereqSelect.selectedOptions).map(opt => opt.value);
@@ -12,8 +21,9 @@ export default function AddCourseModal({ existingNodes, onClose, onAdd }) {
     onAdd({
       code: formData.get('code'),
       name: formData.get('name'),
-      color: formData.get('color'),
-      description: formData.get('description'), 
+      color,
+      textColor,
+      description: formData.get('description'),
       prereqs: prereqs,
       requirement: formData.get('requirement'),
       semester: formData.get('semester')
@@ -68,10 +78,25 @@ export default function AddCourseModal({ existingNodes, onClose, onAdd }) {
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '4px' }}>Node Color</label>
-            <input name="color" type="color" defaultValue="#e0f7fa" style={{ width: '100%', height: '36px', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer' }} />
+            <ColorSelect
+              label="Node Color"
+              value={color}
+              onChange={setColor}
+              options={existingColors}
+              defaultCustomColor="#e0f7fa"
+            />
           </div>
-          
+
+          <div>
+            <ColorSelect
+              label="Text Color"
+              value={textColor}
+              onChange={setTextColor}
+              options={existingTextColors}
+              defaultCustomColor="#111827"
+            />
+          </div>
+
           <div>
             <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', marginBottom: '4px' }}>Prerequisites (Hold Ctrl/Cmd)</label>
             <select name="prereqs" multiple style={{ width: '100%', padding: '8px', height: '90px', borderRadius: '4px', border: '1px solid #ccc' }}>

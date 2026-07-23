@@ -1,7 +1,13 @@
+import ColorSelect from '../ColorSelect';
+
 export default function DetailPanel({
-  selectedNode, isEditing, editData, setEditData, onStartEdit, onSaveEdit, onClose, onNoteTextChange, onRemove
+  selectedNode, isEditing, editData, setEditData, onStartEdit, onSaveEdit, onClose, onNoteTextChange, onRemove, nodes
 }) {
   if (!selectedNode) return null;
+
+  const moduleNodes = (nodes || []).filter(n => n.type === 'module');
+  const existingColors = moduleNodes.map(n => n.data.color);
+  const existingTextColors = moduleNodes.map(n => n.data.textColor);
 
   return (
     <div className="tree-detail-panel">
@@ -32,6 +38,20 @@ export default function DetailPanel({
               <input value={editData.courseCode || ''} onChange={e => setEditData({...editData, courseCode: e.target.value})} placeholder="Course Code" className="tree-edit-input" />
               <input value={editData.courseName || ''} onChange={e => setEditData({...editData, courseName: e.target.value})} placeholder="Course Name" className="tree-edit-input" />
               <textarea value={editData.description || ''} onChange={e => setEditData({...editData, description: e.target.value})} placeholder="Description" className="tree-edit-textarea" />
+              <ColorSelect
+                label="Node Color"
+                value={editData.color || '#e0f7fa'}
+                onChange={(color) => setEditData({...editData, color})}
+                options={existingColors}
+                defaultCustomColor="#e0f7fa"
+              />
+              <ColorSelect
+                label="Text Color"
+                value={editData.textColor || '#111827'}
+                onChange={(textColor) => setEditData({...editData, textColor})}
+                options={existingTextColors}
+                defaultCustomColor="#111827"
+              />
               <select value={editData.semester || ''} onChange={e => setEditData({...editData, semester: e.target.value})} className="tree-edit-select">
                 <option value="">No Semester</option>
                 <option value="Y1S1">Year 1 Sem 1</option>
