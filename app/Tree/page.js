@@ -13,9 +13,12 @@ import './tree.css';
 
 import { nodeTypes, initialNodes, initialEdges, defaultEdgeOptions, edgeStyle } from '../../lib/treeFlowConfig';
 import { autoTopoSort, autoAlign } from '../../lib/treeLayout';
+import { downloadTreeAsJson, parseTreeJson } from '../../lib/treeStorage';
 import { usePrereqTree } from '../../hooks/usePrereqTree';
 import { useEdgeHighlighting } from '../../hooks/useEdgeHighlighting';
+import { useTreePersistence } from '../../hooks/useTreePersistence';
 import CanvasToolbar from '../../components/Tree/CanvasToolbar';
+import DataToolbar from '../../components/Tree/DataToolbar';
 import LayoutToolbar from '../../components/Tree/LayoutToolbar';
 import DetailPanel from '../../components/Tree/DetailPanel';
 import PrereqChoiceModal from '../../components/Tree/PrereqChoiceModal';
@@ -69,6 +72,24 @@ export default function TreePage() {
   }, [setNodes]);
 
   useEdgeHighlighting(selectedNode, setEdges);
+  useTreePersistence(nodes, edges, setNodes, setEdges);
+
+  const handleExport = () => downloadTreeAsJson(nodes, edges);
+
+  const handleImport = async (file) => {
+    try {
+      const text = await file.text();
+      const imported = parseTreeJson(text);
+      if (nodes.length > 0 && !window.confirm('Importing will replace your current canvas. Continue?')) {
+        return;
+      }
+      setNodes(imported.nodes);
+      setEdges(imported.edges);
+      setSelectedNode(null);
+    } catch (err) {
+      window.alert(`Could not import file: ${err.message}`);
+    }
+  };
 
   const handleAddCourse = (newCourseData) => {
     const newNodeId = `node-${Date.now()}`;
@@ -125,6 +146,8 @@ export default function TreePage() {
   return (
     <div className="tree-page">
       <div className="tree-canvas-wrap">
+        <DataToolbar onExport={handleExport} onImport={handleImport} />
+
         <CanvasToolbar
           moduleCode={moduleCode}
           onModuleCodeChange={setModuleCode}

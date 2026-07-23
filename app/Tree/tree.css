@@ -25,6 +25,20 @@
   gap: 6px;
 }
 
+/* Data toolbar (top-left, where the legend used to sit) */
+.tree-data-toolbar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 4;
+  display: flex;
+  gap: 10px;
+}
+
+.tree-hidden-input {
+  display: none;
+}
+
 .tree-input {
   width: 190px;
   padding: 10px;
