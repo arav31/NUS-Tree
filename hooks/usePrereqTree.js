@@ -10,22 +10,55 @@ export function usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode }) {
   const [choicePrompt, setChoicePrompt] = useState(null);
   const choiceResolverRef = useRef(null);
 
-  // Pauses the recursive load to ask which "any one of" prerequisite(s) to include.
-  const askForPrereqChoice = (moduleId, moduleName, candidates, minRequired = 1) => {
+  // Pauses the recursive load to ask which alternative(s) to include. `options`
+  // is a list of { id, label } - some may represent a single module code, others
+  // a whole compound sub-requirement (see describeNode below).
+  const askForPrereqChoice = (moduleId, moduleName, options, minRequired = 1) => {
     return new Promise((resolve) => {
       choiceResolverRef.current = resolve;
-      setChoicePrompt({ moduleId, moduleName, candidates, minRequired });
+      setChoicePrompt({ moduleId, moduleName, options, minRequired });
     });
   };
 
-  const resolvePrereqChoice = (selectedCodes) => {
+  const resolvePrereqChoice = (selectedIds) => {
     setChoicePrompt(null);
     const resolve = choiceResolverRef.current;
     choiceResolverRef.current = null;
-    if (resolve) resolve(selectedCodes);
+    if (resolve) resolve(selectedIds);
   };
 
   const parseCode = (leaf) => leaf.split(':')[0].trim().toUpperCase();
+
+  // Short human-readable summary of a compound sub-requirement, used as the
+  // label for a choice option that represents more than a single module code.
+  const describeNode = (node) => {
+    if (typeof node === 'string') return parseCode(node);
+    if (node.and) return node.and.map(describeNode).join(' + ');
+    if (node.or) return `(${node.or.map(describeNode).join(' or ')})`;
+    if (node.nOf) {
+      const [n, children] = node.nOf;
+      return `${n} of (${children.map(describeNode).join(', ')})`;
+    }
+    return 'requirement';
+  };
+
+  // Turns the children of an or/nOf node into a uniform list of alternatives -
+  // a plain module code is a 'leaf' alternative, anything else (and/or/nOf) is
+  // a 'group' alternative representing a whole sub-requirement. Choosing a
+  // 'group' alternative later resolves its entire sub-tree; choosing a 'leaf'
+  // just adds that one code. Critically, these are mutually exclusive choices,
+  // not "ask about the leaves, then always also include the group anyway".
+  const toAlternatives = (children) => children.map((child) => (
+    typeof child === 'string'
+      ? { type: 'leaf', code: parseCode(child), label: parseCode(child) }
+      : { type: 'group', node: child, label: describeNode(child) }
+  ));
+
+  const resolveAlternative = async (alt, moduleId, moduleName, isAlreadyPresent) => (
+    alt.type === 'leaf'
+      ? [{ code: alt.code, requirement: 'any' }]
+      : await resolvePrereqNode(alt.node, 'all', moduleId, moduleName, isAlreadyPresent)
+  );
 
   // Walks NUSMods' structured prereqTree (and/or/nOf nodes, string leaves) so that
   // "any one of" groups are resolved per-group instead of being flattened together.
@@ -48,40 +81,56 @@ export function usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode }) {
     }
 
     if (node.or) {
-      const leafChildren = node.or.filter((c) => typeof c === 'string').map(parseCode);
-      const nestedChildren = node.or.filter((c) => typeof c !== 'string');
-      const alreadyChosen = leafChildren.filter(isAlreadyPresent);
-      const chosenCodes = alreadyChosen.length > 0
-        ? alreadyChosen
-        : (leafChildren.length > 1 ? await askForPrereqChoice(moduleId, moduleName, leafChildren) : leafChildren);
-      const results = chosenCodes.map((code) => ({ code, requirement: 'any' }));
-      for (const child of nestedChildren) {
-        results.push(...await resolvePrereqNode(child, 'any', moduleId, moduleName, isAlreadyPresent));
+      const alternatives = toAlternatives(node.or);
+      const alreadyChosen = alternatives.filter((alt) => alt.type === 'leaf' && isAlreadyPresent(alt.code));
+
+      let chosen;
+      if (alreadyChosen.length > 0) {
+        chosen = alreadyChosen;
+      } else if (alternatives.length <= 1) {
+        chosen = alternatives;
+      } else {
+        const options = alternatives.map((alt, idx) => ({ id: String(idx), label: alt.label }));
+        const selectedIds = await askForPrereqChoice(moduleId, moduleName, options);
+        chosen = alternatives.filter((_, idx) => selectedIds.includes(String(idx)));
+      }
+
+      const results = [];
+      for (const alt of chosen) {
+        results.push(...await resolveAlternative(alt, moduleId, moduleName, isAlreadyPresent));
       }
       return results;
     }
 
     if (node.nOf) {
       const [n, children] = node.nOf;
-      const leafChildren = children.filter((c) => typeof c === 'string').map(parseCode);
-      const nestedChildren = children.filter((c) => typeof c !== 'string');
+      const alternatives = toAlternatives(children);
 
-      if (leafChildren.length <= 1 || n >= leafChildren.length) {
-        const requirementTag = n >= leafChildren.length ? 'all' : 'any';
-        const results = leafChildren.map((code) => ({ code, requirement: requirementTag }));
-        for (const child of nestedChildren) {
-          results.push(...await resolvePrereqNode(child, 'all', moduleId, moduleName, isAlreadyPresent));
+      if (alternatives.length <= n) {
+        const results = [];
+        for (const alt of alternatives) {
+          results.push(...(alt.type === 'leaf'
+            ? [{ code: alt.code, requirement: 'all' }]
+            : await resolvePrereqNode(alt.node, 'all', moduleId, moduleName, isAlreadyPresent)));
         }
         return results;
       }
 
-      const alreadyChosen = leafChildren.filter(isAlreadyPresent);
+      const alreadyChosen = alternatives.filter((alt) => alt.type === 'leaf' && isAlreadyPresent(alt.code));
+      let chosen;
       if (alreadyChosen.length >= n) {
-        return alreadyChosen.map((code) => ({ code, requirement: 'any' }));
+        chosen = alreadyChosen;
+      } else {
+        const options = alternatives.map((alt, idx) => ({ id: String(idx), label: alt.label }));
+        const selectedIds = await askForPrereqChoice(moduleId, moduleName, options, n);
+        chosen = alternatives.filter((_, idx) => selectedIds.includes(String(idx)));
       }
 
-      const chosenCodes = await askForPrereqChoice(moduleId, moduleName, leafChildren, n);
-      return chosenCodes.map((code) => ({ code, requirement: 'any' }));
+      const results = [];
+      for (const alt of chosen) {
+        results.push(...await resolveAlternative(alt, moduleId, moduleName, isAlreadyPresent));
+      }
+      return results;
     }
 
     return [];
@@ -130,9 +179,15 @@ export function usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode }) {
         const prereqs = [...new Set(prerequisiteText.match(/[A-Z]{2,4}\d{4}[A-Z]?/g) || [])];
         const requirement = /\bor\b/i.test(prerequisiteText) ? 'any' : 'all';
         const alreadyChosen = prereqs.filter(isAlreadyPresent);
-        const chosenPrereqs = alreadyChosen.length > 0
-          ? alreadyChosen
-          : (requirement === 'any' && prereqs.length > 1 ? await askForPrereqChoice(id, module.title, prereqs) : prereqs);
+        let chosenPrereqs;
+        if (alreadyChosen.length > 0) {
+          chosenPrereqs = alreadyChosen;
+        } else if (requirement === 'any' && prereqs.length > 1) {
+          const options = prereqs.map((code) => ({ id: code, label: code }));
+          chosenPrereqs = await askForPrereqChoice(id, module.title, options);
+        } else {
+          chosenPrereqs = prereqs;
+        }
         prereqEntries = chosenPrereqs.map((code) => ({ code, requirement }));
       }
 

@@ -10,10 +10,10 @@ export default function PrereqChoiceModal({ prompt, onConfirm }) {
 
   if (!prompt) return null;
 
-  const { moduleId, moduleName, candidates, minRequired = 1 } = prompt;
+  const { moduleId, moduleName, options, minRequired = 1 } = prompt;
 
-  const toggle = (code) => {
-    setSelected((prev) => prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]);
+  const toggle = (id) => {
+    setSelected((prev) => prev.includes(id) ? prev.filter(v => v !== id) : [...prev, id]);
   };
 
   return (
@@ -26,10 +26,10 @@ export default function PrereqChoiceModal({ prompt, onConfirm }) {
           {moduleName ? `${moduleName} — ` : ''}select which prerequisite(s) you're taking (or plan to take):
         </p>
         <div className="tree-modal-options">
-          {candidates.map((code) => (
-            <label key={code} className="tree-modal-option">
-              <input type="checkbox" checked={selected.includes(code)} onChange={() => toggle(code)} />
-              {code}
+          {options.map((option) => (
+            <label key={option.id} className="tree-modal-option">
+              <input type="checkbox" checked={selected.includes(option.id)} onChange={() => toggle(option.id)} />
+              {option.label}
             </label>
           ))}
         </div>
