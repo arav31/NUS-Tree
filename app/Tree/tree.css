@@ -92,7 +92,8 @@
 }
 
 .tree-layout-btn-topo,
-.tree-layout-btn-align {
+.tree-layout-btn-align,
+.tree-layout-btn-shuffle {
   padding: 8px 16px;
   color: #fff;
   border: none;
@@ -108,6 +109,10 @@
 
 .tree-layout-btn-align {
   background: #10b981;
+}
+
+.tree-layout-btn-shuffle {
+  background: #f59e0b;
 }
 
 /* Detail panel (bottom) */
