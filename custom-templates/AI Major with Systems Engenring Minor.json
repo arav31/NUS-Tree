@@ -82,7 +82,7 @@
       "id": "IE2141",
       "type": "module",
       "position": {
-        "x": 751.5,
+        "x": 738.5,
         "y": 64
       },
       "data": {
@@ -100,7 +100,7 @@
       "id": "IE3105",
       "type": "module",
       "position": {
-        "x": 1067,
+        "x": 1055,
         "y": 64
       },
       "data": {
@@ -120,7 +120,7 @@
       "id": "IE3102",
       "type": "module",
       "position": {
-        "x": 762.5,
+        "x": 749.5,
         "y": 228
       },
       "data": {
@@ -128,6 +128,46 @@
         "courseName": "Systems Engineering Project",
         "color": "#ffeb3b",
         "description": "This systems engineering project requires a student to study, formulate and analyse problems using systems engineering tools and methodologies. The student is also expected to develop alternate solutions based on requirements and tradeoffs and verify them in meeting the requirements through testing and evaluation. It provides an opportunity for students to gain practical experience for industry-type projects. They will also develop communication skills in technical report writing, oral presentations and project management."
+      },
+      "measured": {
+        "width": 210,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "IE2111",
+      "type": "module",
+      "position": {
+        "x": 1071,
+        "y": 228
+      },
+      "data": {
+        "courseCode": "IE2111",
+        "courseName": "Industrial & Systems Engrg Principles & Practice II",
+        "color": "#ffeb3b",
+        "description": "This course introduces the principles and practice of engineering economics and financial decision making faced by engineers. Students will learn how to deal with the financial and economic aspects in the design, evaluation and management of engineering systems involving capital investments and cash flows over time. Topics covered include principles and practice of cash flow analysis, decision making involving single and multiple alternatives, depreciation of capital assets and after-tax project cash-flow analysis, replacement analysis of capital assets, and dealing with risk and uncertainty. Case studies and computational tools will be used to model, analyse and solve complex problems effectively."
+      },
+      "measured": {
+        "width": 339,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS2030S",
+      "type": "module",
+      "position": {
+        "x": -895.5,
+        "y": 356
+      },
+      "data": {
+        "courseCode": "CS2030S",
+        "courseName": "Programming Methodology II",
+        "color": "#e0f7fa",
+        "description": "This course is a follow up to CS1010. It explores two modern programming paradigms, object-oriented programming and functional programming. Through a series of integrated assignments, students will learn to develop medium-scale software programs in the order of thousands of lines of code and tens of classes using object-oriented design principles and advanced programming constructs available in the two paradigms. Topics include objects and classes, composition, association, inheritance, interface, polymorphism, abstract classes, dynamic binding, lambda expression, effect-free programming, first class functions, closures, continuations, monad, etc."
       },
       "measured": {
         "width": 210,
@@ -157,23 +197,83 @@
       "dragging": false
     },
     {
-      "id": "IE2111",
+      "id": "ST2334",
       "type": "module",
       "position": {
-        "x": 1083,
+        "x": 380,
         "y": 356
       },
       "data": {
-        "courseCode": "IE2111",
-        "courseName": "Industrial & Systems Engrg Principles & Practice II",
-        "color": "#ffeb3b",
-        "description": "This course introduces the principles and practice of engineering economics and financial decision making faced by engineers. Students will learn how to deal with the financial and economic aspects in the design, evaluation and management of engineering systems involving capital investments and cash flows over time. Topics covered include principles and practice of cash flow analysis, decision making involving single and multiple alternatives, depreciation of capital assets and after-tax project cash-flow analysis, replacement analysis of capital assets, and dealing with risk and uncertainty. Case studies and computational tools will be used to model, analyse and solve complex problems effectively."
+        "courseCode": "ST2334",
+        "courseName": "Probability and Statistics",
+        "color": "#e0f7fa",
+        "description": "This course introduces students to basic probability theory and statistical inference. Topics include basic concepts of probability, conditional probability, independence, random variables, joint and marginal distributions, mean and variance, some common probability distributions, sampling distributions, estimation and hypothesis testing based on a normal population."
       },
       "measured": {
-        "width": 339,
+        "width": 183,
         "height": 68
       },
-      "selected": true,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "IE2110",
+      "type": "module",
+      "position": {
+        "x": 769,
+        "y": 356
+      },
+      "data": {
+        "courseCode": "IE2110",
+        "courseName": "Operations Research I",
+        "color": "#ffeb3b",
+        "description": "This foundation course introduces students to some of the basic concepts of operations research. Topics include linear programming, network flow models, and nonlinear programming. Besides the basic concepts, students will also learn about the applications of these topics to complex engineering and management problems."
+      },
+      "measured": {
+        "width": 171,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "ES2660",
+      "type": "module",
+      "position": {
+        "x": 1107.5,
+        "y": 356
+      },
+      "data": {
+        "courseCode": "ES2660",
+        "courseName": "Communicating in the Information Age",
+        "color": "#ffeb3b",
+        "description": "In a context of prolific production and convenient access to content and innovation in the Information Age, how should one critically process and clearly communicate ideas to various audiences? In this course, students will learn to question and articulate their analysis of assumptions and assertions on issues facing the Information Age through processes such as identifying bias and substantiating arguments. The Ennis’ (1986, 2001) taxonomy of critical thinking dispositions will be employed to develop students’ analytical thinking skills and their ability to articulate cogent responses to arguments or to defend their own positions in both written and oral form."
+      },
+      "measured": {
+        "width": 266,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "IS1108",
+      "type": "module",
+      "position": {
+        "x": 774.5,
+        "y": 566
+      },
+      "data": {
+        "courseCode": "IS1108",
+        "courseName": "Digital and AI Ethics",
+        "color": "#ffeb3b",
+        "description": "Course is designed to introduce students to the issues of AI and digital ethics faced by individuals and organisations. It covers the ethical principles governing the behaviors and beliefs about how we use technology, and how we collect and process personal information in a manner that aligns with individual and organisational expectations for security and confidentiality. It will address challenges in balancing technological desirability with social and environmental responsibility while developing digital products and services. Key topics include Professional Ethics, Artificial Intelligence Ethics and Governance, Automation and Autonomous Systems, Digital Ethics by Design, Data Protection in ICT, Human Machine Interaction, Computing for Social Good, Digital Intellectual Property Rights, and Digital Divide, Equity, Accessibility, and Inclusion."
+      },
+      "measured": {
+        "width": 160,
+        "height": 68
+      },
+      "selected": false,
       "dragging": false
     },
     {
@@ -193,84 +293,24 @@
         "width": 276,
         "height": 68
       },
-      "selected": false,
+      "selected": true,
       "dragging": false
     },
     {
-      "id": "ST2334",
+      "id": "CS2103T",
       "type": "module",
       "position": {
-        "x": 380,
-        "y": 694
+        "x": -873,
+        "y": 1078
       },
       "data": {
-        "courseCode": "ST2334",
-        "courseName": "Probability and Statistics",
-        "color": "#e0f7fa",
-        "description": "This course introduces students to basic probability theory and statistical inference. Topics include basic concepts of probability, conditional probability, independence, random variables, joint and marginal distributions, mean and variance, some common probability distributions, sampling distributions, estimation and hypothesis testing based on a normal population."
-      },
-      "measured": {
-        "width": 183,
-        "height": 68
-      },
-      "selected": false,
-      "dragging": false
-    },
-    {
-      "id": "CS2030S",
-      "type": "module",
-      "position": {
-        "x": 762.5,
-        "y": 694
-      },
-      "data": {
-        "courseCode": "CS2030S",
-        "courseName": "Programming Methodology II",
-        "color": "#e0f7fa",
-        "description": "This course is a follow up to CS1010. It explores two modern programming paradigms, object-oriented programming and functional programming. Through a series of integrated assignments, students will learn to develop medium-scale software programs in the order of thousands of lines of code and tens of classes using object-oriented design principles and advanced programming constructs available in the two paradigms. Topics include objects and classes, composition, association, inheritance, interface, polymorphism, abstract classes, dynamic binding, lambda expression, effect-free programming, first class functions, closures, continuations, monad, etc."
-      },
-      "measured": {
-        "width": 210,
-        "height": 68
-      },
-      "selected": false,
-      "dragging": false
-    },
-    {
-      "id": "IE2110",
-      "type": "module",
-      "position": {
-        "x": 1167,
-        "y": 822
-      },
-      "data": {
-        "courseCode": "IE2110",
-        "courseName": "Operations Research I",
+        "courseCode": "CS2103T",
+        "courseName": "Software Engineering",
         "color": "#ffeb3b",
-        "description": "This foundation course introduces students to some of the basic concepts of operations research. Topics include linear programming, network flow models, and nonlinear programming. Besides the basic concepts, students will also learn about the applications of these topics to complex engineering and management problems."
+        "description": "This course introduces the necessary conceptual and analytical tools for systematic and rigorous development of software systems. It covers four main areas of software development, namely object-oriented system analysis, object-oriented system modelling and design, implementation, and testing, with emphasis on system modelling and design and implementation of software courses that work cooperatively to fulfill the requirements of the system. Tools and techniques for software development, such as Unified Modelling Language (UML), program specification, and testing methods, will be taught. Major software engineering issues such as modularisation criteria, program correctness, and software quality will also be covered."
       },
       "measured": {
-        "width": 171,
-        "height": 68
-      },
-      "selected": false,
-      "dragging": false
-    },
-    {
-      "id": "IS1108",
-      "type": "module",
-      "position": {
-        "x": 1172.5,
-        "y": 950
-      },
-      "data": {
-        "courseCode": "IS1108",
-        "courseName": "Digital and AI Ethics",
-        "color": "#ffeb3b",
-        "description": "Course is designed to introduce students to the issues of AI and digital ethics faced by individuals and organisations. It covers the ethical principles governing the behaviors and beliefs about how we use technology, and how we collect and process personal information in a manner that aligns with individual and organisational expectations for security and confidentiality. It will address challenges in balancing technological desirability with social and environmental responsibility while developing digital products and services. Key topics include Professional Ethics, Artificial Intelligence Ethics and Governance, Automation and Autonomous Systems, Digital Ethics by Design, Data Protection in ICT, Human Machine Interaction, Computing for Social Good, Digital Intellectual Property Rights, and Digital Divide, Equity, Accessibility, and Inclusion."
-      },
-      "measured": {
-        "width": 160,
+        "width": 165,
         "height": 68
       },
       "selected": false,
@@ -355,46 +395,6 @@
       },
       "selected": false,
       "dragging": false
-    },
-    {
-      "id": "CS2103T",
-      "type": "module",
-      "position": {
-        "x": 785,
-        "y": 1078
-      },
-      "data": {
-        "courseCode": "CS2103T",
-        "courseName": "Software Engineering",
-        "color": "#ffeb3b",
-        "description": "This course introduces the necessary conceptual and analytical tools for systematic and rigorous development of software systems. It covers four main areas of software development, namely object-oriented system analysis, object-oriented system modelling and design, implementation, and testing, with emphasis on system modelling and design and implementation of software courses that work cooperatively to fulfill the requirements of the system. Tools and techniques for software development, such as Unified Modelling Language (UML), program specification, and testing methods, will be taught. Major software engineering issues such as modularisation criteria, program correctness, and software quality will also be covered."
-      },
-      "measured": {
-        "width": 165,
-        "height": 68
-      },
-      "selected": false,
-      "dragging": false
-    },
-    {
-      "id": "ES2660",
-      "type": "module",
-      "position": {
-        "x": 1119.5,
-        "y": 1078
-      },
-      "data": {
-        "courseCode": "ES2660",
-        "courseName": "Communicating in the Information Age",
-        "color": "#ffeb3b",
-        "description": "In a context of prolific production and convenient access to content and innovation in the Information Age, how should one critically process and clearly communicate ideas to various audiences? In this course, students will learn to question and articulate their analysis of assumptions and assertions on issues facing the Information Age through processes such as identifying bias and substantiating arguments. The Ennis’ (1986, 2001) taxonomy of critical thinking dispositions will be employed to develop students’ analytical thinking skills and their ability to articulate cogent responses to arguments or to defend their own positions in both written and oral form."
-      },
-      "measured": {
-        "width": 266,
-        "height": 68
-      },
-      "selected": false,
-      "dragging": false
     }
   ],
   "edges": [
@@ -422,7 +422,8 @@
         "stroke": "#888",
         "strokeWidth": 2
       },
-      "animated": false
+      "animated": false,
+      "selected": false
     },
     {
       "id": "CS2040S-CS3230",
