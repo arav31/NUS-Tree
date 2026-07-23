@@ -18,6 +18,11 @@ export default function DetailPanel({
             placeholder="Type your notes here..."
             className="tree-note-textarea"
           />
+          <div className="tree-view-actions">
+            <button className="tree-remove-btn" onClick={onRemove}>
+              Remove Item
+            </button>
+          </div>
         </div>
       ) : (
         <div>
