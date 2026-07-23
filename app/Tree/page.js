@@ -16,9 +16,9 @@ import { autoTopoSort, autoAlign } from '../../lib/treeLayout';
 import { usePrereqTree } from '../../hooks/usePrereqTree';
 import { useEdgeHighlighting } from '../../hooks/useEdgeHighlighting';
 import CanvasToolbar from '../../components/Tree/CanvasToolbar';
-import PrereqLegend from '../../components/Tree/PrereqLegend';
 import LayoutToolbar from '../../components/Tree/LayoutToolbar';
 import DetailPanel from '../../components/Tree/DetailPanel';
+import PrereqChoiceModal from '../../components/Tree/PrereqChoiceModal';
 import AddCourseModal from '../../components/AddCourseModal';
 
 export default function TreePage() {
@@ -31,8 +31,8 @@ export default function TreePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
 
-  const { moduleCode, setModuleCode, treeError, isLoadingTree, loadPrereqTree } =
-    usePrereqTree({ setNodes, setEdges, setSelectedNode });
+  const { moduleCode, setModuleCode, treeError, isLoadingTree, loadPrereqTree, choicePrompt, resolvePrereqChoice } =
+    usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode });
 
   const startEdit = () => {
     setEditData(selectedNode.data);
@@ -134,8 +134,6 @@ export default function TreePage() {
           onAddNote={handleAddNote}
         />
 
-        <PrereqLegend />
-
         <ReactFlow
           nodes={nodes} edges={edges}
           onNodesChange={onNodesChange} onEdgesChange={onEdgesChange}
@@ -166,6 +164,8 @@ export default function TreePage() {
       {isModalOpen && (
         <AddCourseModal existingNodes={nodes} onClose={() => setIsModalOpen(false)} onAdd={handleAddCourse} />
       )}
+
+      <PrereqChoiceModal prompt={choicePrompt} onConfirm={resolvePrereqChoice} />
     </div>
   );
 }

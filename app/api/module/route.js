@@ -33,6 +33,7 @@ export async function GET(request) {
     title: module.title,
     description: module.description,
     prerequisite: module.prerequisite || null,
+    prereqTree: module.prereqTree || null,
     semesterData: (module.semesterData || []).map((item) => item.semester),
   });
 }

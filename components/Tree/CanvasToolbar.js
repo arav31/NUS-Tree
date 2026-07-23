@@ -13,11 +13,11 @@ export default function CanvasToolbar({
             className="tree-input"
           />
           <button type="submit" className="tree-btn tree-btn-primary">
-            {isLoadingTree ? 'Loading...' : 'Load Trees'}
+            {isLoadingTree ? 'Loading...' : '+ Load Module from NUSMods'}
           </button>
         </form>
         <button onClick={onOpenAddModule} className="tree-btn tree-btn-primary">
-          + Add Module
+          + Add Module Manually
         </button>
         <button onClick={onAddNote} className="tree-btn tree-btn-dark">
           + Add Note

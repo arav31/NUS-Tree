@@ -61,34 +61,6 @@
   color: #e02424;
 }
 
-/* Legend (top-left) */
-.tree-legend {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 4;
-  background: rgba(255, 255, 255, 0.92);
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  line-height: 1.8;
-}
-
-.tree-legend-line {
-  display: inline-block;
-  width: 30px;
-  border-top: 2px solid #666;
-  margin-right: 8px;
-}
-
-.tree-legend-line-dashed {
-  display: inline-block;
-  width: 30px;
-  border-top: 2px dashed #666;
-  margin-right: 8px;
-}
-
 /* Layout toolbar (bottom-center pill) */
 .tree-layout-toolbar {
   position: absolute;
@@ -231,4 +203,64 @@
 
 .tree-remove-btn {
   background: #e02424;
+}
+
+.tree-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Prerequisite choice modal */
+.tree-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tree-modal-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  width: 380px;
+  max-width: 90vw;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.tree-modal-title {
+  margin: 0 0 8px;
+}
+
+.tree-modal-subtitle {
+  margin: 0 0 16px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.tree-modal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.tree-modal-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.tree-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
