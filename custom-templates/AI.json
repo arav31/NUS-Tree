@@ -2,12 +2,12 @@
   "title": "BComp AI Pathway",
   "description": "A standard AI specialization track through the CS core and machine learning modules.",
   "tags": ["CS", "AI", "Machine Learning"],
-  "nodes": [
+   "nodes": [
     {
       "id": "CS1010S",
       "type": "module",
       "position": {
-        "x": -150,
+        "x": -136,
         "y": 80
       },
       "data": {
@@ -19,15 +19,15 @@
         "semester": "Y1S1"
       },
       "measured": {
-        "width": 198,
-        "height": 67
+        "width": 199,
+        "height": 68
       }
     },
     {
       "id": "MA1521",
       "type": "module",
       "position": {
-        "x": 150,
+        "x": 189,
         "y": 80
       },
       "data": {
@@ -39,15 +39,17 @@
         "semester": "Y1S1"
       },
       "measured": {
-        "width": 176,
-        "height": 67
-      }
+        "width": 177,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
     },
     {
       "id": "MA1522",
       "type": "module",
       "position": {
-        "x": 424,
+        "x": 480,
         "y": 80
       },
       "data": {
@@ -58,7 +60,7 @@
       },
       "measured": {
         "width": 212,
-        "height": 67
+        "height": 68
       },
       "selected": false,
       "dragging": false
@@ -67,7 +69,7 @@
       "id": "CS1231S",
       "type": "module",
       "position": {
-        "x": 1097.5,
+        "x": 1022,
         "y": 80
       },
       "data": {
@@ -78,14 +80,14 @@
       },
       "measured": {
         "width": 160,
-        "height": 67
+        "height": 68
       }
     },
     {
       "id": "MA1511",
       "type": "module",
       "position": {
-        "x": 1342.5,
+        "x": 1247,
         "y": 80
       },
       "data": {
@@ -95,16 +97,17 @@
         "description": "This is a seven-week course specially designed for students majoring in Engineering. It introduces the basic concepts in one variable and several variable calculus with applications in engineering. Main topics: One variable calculus. Power series. Partial differentiation. Multiple integrals. Vector Calculus."
       },
       "measured": {
-        "width": 163,
-        "height": 67
+        "width": 164,
+        "height": 68
       },
-      "selected": false
+      "selected": false,
+      "dragging": false
     },
     {
       "id": "MA1512",
       "type": "module",
       "position": {
-        "x": 1565.5,
+        "x": 1542,
         "y": 80
       },
       "data": {
@@ -115,15 +118,17 @@
       },
       "measured": {
         "width": 260,
-        "height": 67
-      }
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
     },
     {
       "id": "CS2040S",
       "type": "module",
       "position": {
-        "x": 418.5,
-        "y": 300
+        "x": -148,
+        "y": 213.4853310980721
       },
       "data": {
         "courseCode": "CS2040S",
@@ -135,7 +140,7 @@
       },
       "measured": {
         "width": 223,
-        "height": 67
+        "height": 68
       },
       "selected": false,
       "dragging": false
@@ -144,8 +149,8 @@
       "id": "ST2334",
       "type": "module",
       "position": {
-        "x": 1086,
-        "y": 300
+        "x": 765.5,
+        "y": 213.4853310980721
       },
       "data": {
         "courseCode": "ST2334",
@@ -155,7 +160,7 @@
       },
       "measured": {
         "width": 183,
-        "height": 67
+        "height": 68
       },
       "selected": false,
       "dragging": false
@@ -164,8 +169,8 @@
       "id": "CS2109S",
       "type": "module",
       "position": {
-        "x": 392.5,
-        "y": 520
+        "x": 139.5,
+        "y": 433.1433361274099
       },
       "data": {
         "courseCode": "CS2109S",
@@ -176,8 +181,8 @@
         "semester": "Y2S1"
       },
       "measured": {
-        "width": 275,
-        "height": 67
+        "width": 276,
+        "height": 68
       },
       "selected": false,
       "dragging": false
@@ -186,8 +191,8 @@
       "id": "ST2132",
       "type": "module",
       "position": {
-        "x": 1090.5,
-        "y": 520
+        "x": 1242,
+        "y": 433.1433361274099
       },
       "data": {
         "courseCode": "ST2132",
@@ -197,7 +202,7 @@
       },
       "measured": {
         "width": 174,
-        "height": 67
+        "height": 68
       },
       "selected": false,
       "dragging": false
@@ -206,8 +211,8 @@
       "id": "CS3244",
       "type": "module",
       "position": {
-        "x": 450,
-        "y": 740
+        "x": 197.5,
+        "y": 581.5431684828164
       },
       "data": {
         "courseCode": "CS3244",
@@ -219,7 +224,7 @@
       },
       "measured": {
         "width": 160,
-        "height": 67
+        "height": 68
       },
       "selected": false,
       "dragging": false
@@ -228,8 +233,8 @@
       "id": "CS2251",
       "type": "module",
       "position": {
-        "x": 1072.5,
-        "y": 740
+        "x": 752,
+        "y": 581.5431684828164
       },
       "data": {
         "courseCode": "CS2251",
@@ -239,17 +244,17 @@
       },
       "measured": {
         "width": 210,
-        "height": 67
+        "height": 68
       },
-      "selected": true,
+      "selected": false,
       "dragging": false
     },
     {
       "id": "CS4243",
       "type": "module",
       "position": {
-        "x": 727.5,
-        "y": 960
+        "x": 135,
+        "y": 725.5431684828164
       },
       "data": {
         "courseCode": "CS4243",
@@ -261,9 +266,9 @@
       },
       "measured": {
         "width": 285,
-        "height": 67
+        "height": 68
       },
-      "selected": false,
+      "selected": true,
       "dragging": false
     }
   ],

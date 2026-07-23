@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const features = [
   { title: 'Infinite Canvas', description: 'Pan and zoom with your mouse or trackpad to explore your entire roadmap freely.' },
-  { title: 'Auto-Alignment', description: 'Use "Auto Topo Sort" to visualize dependencies or "Auto Align Grid" to keep your workspace tidy.' },
+  { title: 'Auto-Alignment', description: 'Use "Auto Arrange" to visualize dependencies or "Auto Align Grid" to keep your workspace tidy.' },
   { title: 'Node Selection', description: 'Click any module or note to highlight it and reveal its details in the bottom panel.' },
   { title: 'Add Modules', description: 'Add a module manually, or load one straight from NUSMods with its prerequisites resolved automatically.' },
   { title: 'Sticky Notes', description: 'Jot down reminders, internship deadlines, or general study tips right on the canvas.' },

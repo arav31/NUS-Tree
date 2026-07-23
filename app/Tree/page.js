@@ -12,7 +12,7 @@ import '@xyflow/react/dist/style.css';
 import './tree.css';
 
 import { nodeTypes, initialNodes, initialEdges, defaultEdgeOptions, edgeStyle } from '../../lib/treeFlowConfig';
-import { autoTopoSort, autoAlign } from '../../lib/treeLayout';
+import { autoArrange, autoAlign } from '../../lib/treeLayout';
 import { downloadTreeAsJson, parseTreeJson } from '../../lib/treeStorage';
 import { usePrereqTree } from '../../hooks/usePrereqTree';
 import { useEdgeHighlighting } from '../../hooks/useEdgeHighlighting';
@@ -60,7 +60,7 @@ export default function TreePage() {
     setSelectedNode(null);
   };
 
-  const handleAutoTopoSort = () => setNodes(autoTopoSort(nodes, edges));
+  const handleAutoArrange = () => setNodes(autoArrange(nodes, edges));
   const handleAutoAlign = () => setNodes((currentNodes) => autoAlign(currentNodes));
 
   useEffect(() => {
@@ -170,7 +170,7 @@ export default function TreePage() {
           <Controls />
         </ReactFlow>
 
-        <LayoutToolbar onAutoTopoSort={handleAutoTopoSort} onAutoAlign={handleAutoAlign} />
+        <LayoutToolbar onAutoArrange={handleAutoArrange} onAutoAlign={handleAutoAlign} />
       </div>
 
       <DetailPanel

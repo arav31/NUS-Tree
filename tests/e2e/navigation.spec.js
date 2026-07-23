@@ -33,7 +33,7 @@ test('opens the Tree workspace controls', async ({ page }) => {
   ).toBeVisible();
   await expect(page.getByRole('button', { name: '+ Add Note' })).toBeVisible();
   await expect(
-    page.getByRole('button', { name: /Auto Topo Sort/ }),
+    page.getByRole('button', { name: /Auto Arrange/ }),
   ).toBeVisible();
   await expect(
     page.getByRole('button', { name: /Auto Align Grid/ }),
