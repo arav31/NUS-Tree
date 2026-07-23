@@ -1,0 +1,701 @@
+{
+  "nodes": [
+    {
+      "id": "CS1010X",
+      "type": "module",
+      "position": {
+        "x": -596,
+        "y": 64
+      },
+      "data": {
+        "courseCode": "CS1010X",
+        "courseName": "Programming Methodology",
+        "color": "#e0f7fa",
+        "description": "This course introduces the fundamental concepts of problem solving by computing and programming using an imperative programming language. It is the first and foremost introductory course to computing and is equivalent to CS1010, CS1010S and CS1010E Programming Methodology. The course will be taught using the Python programming language and topics covered include problem solving by computing, writing pseudo-codes, basic problem formulation and problem solving, program development, coding, testing and debugging, fundamental programming constructs (variables, types, expressions, assignments, functions, control structures, etc.), fundamental data structures: arrays, strings and structures, simple file processing, and basic recursion."
+      },
+      "measured": {
+        "width": 199,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "MA1522",
+      "type": "module",
+      "position": {
+        "x": -298.5,
+        "y": 64
+      },
+      "data": {
+        "courseCode": "MA1522",
+        "courseName": "Linear Algebra for Computing",
+        "color": "#e0f7fa",
+        "description": "This course is targeted at students from School of Computing. It introduces basic concepts in linear algebra that are routinely applied in computer science, in the context of the Euclidean spaces, and will develop basic skills in computing with vectors and matrices with and without using computational software (MATLAB). Students are expected to acquire computational facilities and geometric intuition about vectors and matrices. Major topics: Systems of linear equations, matrices, determinants, Euclidean spaces, linear combinations and linear span, subspaces, linear independence, bases and dimension, rank of a matrix, inner products, eigenvalues and eigenvectors, diagonalisation, linear transformations between Euclidean spaces, applications."
+      },
+      "measured": {
+        "width": 212,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS1231S",
+      "type": "module",
+      "position": {
+        "x": 49.5,
+        "y": 64
+      },
+      "data": {
+        "courseCode": "CS1231S",
+        "courseName": "Discrete Structures",
+        "color": "#e0f7fa",
+        "description": "This course introduces mathematical tools required in the study of computer science. Topics include: (1) Logic and proof techniques: propositions, conditionals, quantifications. (2) Relations and Functions: Equivalence relations and partitions. Partially ordered sets. Well-Ordering Principle. Function equality. Boolean/identity/inverse functions. Bijection. (3) Mathematical formulation of data models (linear model, trees, graphs). (4) Counting and Combinatoric: Pigeonhole Principle. Inclusion-Exclusion Principle. Number of relations on a set, number of injections from one finite set to another, Diagonalization proof: An infinite countable set has an uncountable power set; Algorithmic proof: An infinite set has a countably infinite subset. Subsets of countable sets are countable."
+      },
+      "measured": {
+        "width": 160,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "MA1521",
+      "type": "module",
+      "position": {
+        "x": 383,
+        "y": 64
+      },
+      "data": {
+        "courseCode": "MA1521",
+        "courseName": "Calculus for Computing",
+        "color": "#e0f7fa",
+        "description": "This course provides a basic foundation for calculus and its related subjects required by computing students. The objective is to train the students to be able to handle calculus techniques arising in their courses of specialisation. In addition to the standard calculus material, the course also covers simple mathematical modeling techniques and numerical methods in connection with ordinary differential equations. Major topics: Preliminaries on sets and number systems. Calculus of functions of one variable and applications. Sequences, series and power series. Functions of several variables. Extrema. First and second order differential equations. Basic numerical methods for ordinary differential equations."
+      },
+      "measured": {
+        "width": 177,
+        "height": 68
+      }
+    },
+    {
+      "id": "IE2141",
+      "type": "module",
+      "position": {
+        "x": 751.5,
+        "y": 64
+      },
+      "data": {
+        "courseCode": "IE2141",
+        "courseName": "Systems Thinking and Dynamics",
+        "color": "#e0f7fa",
+        "description": "The course aims to introduce students to the fundamental concepts and underlying principles of system thinking, design and dynamics. It will provide students with an understanding of systems thinking and applying systems dynamics modelling to describe and simulate real world problems. At the end of the course, students should have the necessary knowledge and abilities to define, analyse, design, and develop a system dynamics model that simulates a specific problem and recommend solutions for different scenarios."
+      },
+      "measured": {
+        "width": 232,
+        "height": 68
+      }
+    },
+    {
+      "id": "IE3105",
+      "type": "module",
+      "position": {
+        "x": 1067,
+        "y": 64
+      },
+      "data": {
+        "courseCode": "IE3105",
+        "courseName": "Fundamentals of Systems Engineering and Architecture",
+        "color": "#e0f7fa",
+        "description": "This foundation course aims to introduce students to the fundamental concepts and underlying principles of systems engineering, including systems thinking, as well as the design and management of complex systems. The topics in this course include introductory concepts like system structure and boundary, complexity and system archetypes, system design process and management, system dynamics and system economic evaluation. The instruction will be supplemented with case studies and also seminars by academic and industrial practitioners."
+      },
+      "measured": {
+        "width": 371,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "IE3102",
+      "type": "module",
+      "position": {
+        "x": 762.5,
+        "y": 228
+      },
+      "data": {
+        "courseCode": "IE3102",
+        "courseName": "Systems Engineering Project",
+        "color": "#ffeb3b",
+        "description": "This systems engineering project requires a student to study, formulate and analyse problems using systems engineering tools and methodologies. The student is also expected to develop alternate solutions based on requirements and tradeoffs and verify them in meeting the requirements through testing and evaluation. It provides an opportunity for students to gain practical experience for industry-type projects. They will also develop communication skills in technical report writing, oral presentations and project management."
+      },
+      "measured": {
+        "width": 210,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS2040S",
+      "type": "module",
+      "position": {
+        "x": -608,
+        "y": 356
+      },
+      "data": {
+        "courseCode": "CS2040S",
+        "courseName": "Data Structures and Algorithms",
+        "color": "#e0f7fa",
+        "description": "This course introduces students to the design and implementation of fundamental data structures and algorithms. The course covers basic data structures (linked lists, stacks, queues, hash tables, binary heaps, trees, and graphs), searching and sorting algorithms, and basic analysis of algorithms."
+      },
+      "measured": {
+        "width": 223,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "IE2111",
+      "type": "module",
+      "position": {
+        "x": 1083,
+        "y": 356
+      },
+      "data": {
+        "courseCode": "IE2111",
+        "courseName": "Industrial & Systems Engrg Principles & Practice II",
+        "color": "#ffeb3b",
+        "description": "This course introduces the principles and practice of engineering economics and financial decision making faced by engineers. Students will learn how to deal with the financial and economic aspects in the design, evaluation and management of engineering systems involving capital investments and cash flows over time. Topics covered include principles and practice of cash flow analysis, decision making involving single and multiple alternatives, depreciation of capital assets and after-tax project cash-flow analysis, replacement analysis of capital assets, and dealing with risk and uncertainty. Case studies and computational tools will be used to model, analyse and solve complex problems effectively."
+      },
+      "measured": {
+        "width": 339,
+        "height": 68
+      },
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "CS2109S",
+      "type": "module",
+      "position": {
+        "x": -8.5,
+        "y": 566
+      },
+      "data": {
+        "courseCode": "CS2109S",
+        "courseName": "Introduction to AI and Machine Learning",
+        "color": "#e0f7fa",
+        "description": "This course introduces basic concepts in Artificial Intelligence (AI) and Machine Learning (ML). It adopts the perspective that planning, games, and learning are related types of search problems, and examines the underlying issues, challenges and techniques. Planning/games related topics include tree/graph search, A* search, local search, and adversarial search (e.g., games). Learning related topics include supervised and unsupervised learning, model validation, and neural networks."
+      },
+      "measured": {
+        "width": 276,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "ST2334",
+      "type": "module",
+      "position": {
+        "x": 380,
+        "y": 694
+      },
+      "data": {
+        "courseCode": "ST2334",
+        "courseName": "Probability and Statistics",
+        "color": "#e0f7fa",
+        "description": "This course introduces students to basic probability theory and statistical inference. Topics include basic concepts of probability, conditional probability, independence, random variables, joint and marginal distributions, mean and variance, some common probability distributions, sampling distributions, estimation and hypothesis testing based on a normal population."
+      },
+      "measured": {
+        "width": 183,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS2030S",
+      "type": "module",
+      "position": {
+        "x": 762.5,
+        "y": 694
+      },
+      "data": {
+        "courseCode": "CS2030S",
+        "courseName": "Programming Methodology II",
+        "color": "#e0f7fa",
+        "description": "This course is a follow up to CS1010. It explores two modern programming paradigms, object-oriented programming and functional programming. Through a series of integrated assignments, students will learn to develop medium-scale software programs in the order of thousands of lines of code and tens of classes using object-oriented design principles and advanced programming constructs available in the two paradigms. Topics include objects and classes, composition, association, inheritance, interface, polymorphism, abstract classes, dynamic binding, lambda expression, effect-free programming, first class functions, closures, continuations, monad, etc."
+      },
+      "measured": {
+        "width": 210,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "IE2110",
+      "type": "module",
+      "position": {
+        "x": 1167,
+        "y": 822
+      },
+      "data": {
+        "courseCode": "IE2110",
+        "courseName": "Operations Research I",
+        "color": "#ffeb3b",
+        "description": "This foundation course introduces students to some of the basic concepts of operations research. Topics include linear programming, network flow models, and nonlinear programming. Besides the basic concepts, students will also learn about the applications of these topics to complex engineering and management problems."
+      },
+      "measured": {
+        "width": 171,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "IS1108",
+      "type": "module",
+      "position": {
+        "x": 1172.5,
+        "y": 950
+      },
+      "data": {
+        "courseCode": "IS1108",
+        "courseName": "Digital and AI Ethics",
+        "color": "#ffeb3b",
+        "description": "Course is designed to introduce students to the issues of AI and digital ethics faced by individuals and organisations. It covers the ethical principles governing the behaviors and beliefs about how we use technology, and how we collect and process personal information in a manner that aligns with individual and organisational expectations for security and confidentiality. It will address challenges in balancing technological desirability with social and environmental responsibility while developing digital products and services. Key topics include Professional Ethics, Artificial Intelligence Ethics and Governance, Automation and Autonomous Systems, Digital Ethics by Design, Data Protection in ICT, Human Machine Interaction, Computing for Social Good, Digital Intellectual Property Rights, and Digital Divide, Equity, Accessibility, and Inclusion."
+      },
+      "measured": {
+        "width": 160,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS3230",
+      "type": "module",
+      "position": {
+        "x": -616.5,
+        "y": 1078
+      },
+      "data": {
+        "courseCode": "CS3230",
+        "courseName": "Design and Analysis of Algorithms",
+        "color": "#ffeb3b",
+        "description": "This course introduces different techniques of designing and analysing algorithms. Students will learn about the framework for algorithm analysis, for example, lower bound arguments, average case analysis, and the theory of NP-completeness. In addition, students are exposed to various algorithm design paradigms. The course serves two purposes: to improve the students' ability to design algorithms in different areas, and to prepare students for the study of more advanced algorithms. The course covers lower and upper bounds, recurrences, basic algorithm paradigms (such as prune-and-search, dynamic programming, branch-and-bound, graph traversal, and randomised approaches), amortized analysis, NP-completeness, and some selected advanced topics."
+      },
+      "measured": {
+        "width": 240,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS3263",
+      "type": "module",
+      "position": {
+        "x": -316.5,
+        "y": 1078
+      },
+      "data": {
+        "courseCode": "CS3263",
+        "courseName": "Foundations of Artificial Intelligence",
+        "color": "#ffeb3b",
+        "description": "Artificial intelligence is increasingly integrated in our everyday lives, and becoming a core engine to power social and economic growth. This course covers the core concepts in artificial intelligence that underlie solutions to these challenging, multi-facted problems. Topics covered include knowledge representation and reasoning with uncertainty, preference, and time, constraint satisfaction, games and optimized decisions, human factors, and new advances in integrative AI and responsible AI. The goal of this class is to introduce students to a variety of approaches for solving real-life problems using the tools of AI."
+      },
+      "measured": {
+        "width": 248,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS3264",
+      "type": "module",
+      "position": {
+        "x": 11,
+        "y": 1078
+      },
+      "data": {
+        "courseCode": "CS3264",
+        "courseName": "Foundations of Machine Learning",
+        "color": "#ffeb3b",
+        "description": "This course covers the fundamental concepts, theory, and algorithms in machine learning, and a variety of modeling techniques to extract information from raw data. The class will cover topics in both supervised and unsupervised learning, including problems in classification and regression, computational learning theory, reinforcement learning, probabilistic inference, ensemble learning, and more advanced topics. The class will cover both the underlying mathematical tools, as well as practical frameworks for solving real-world problems. At the end of the course, students are expected to be familiar with the theories and paradigms of computational learning, and capable of implementing basic learning systems."
+      },
+      "measured": {
+        "width": 237,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS3268",
+      "type": "module",
+      "position": {
+        "x": 327.5,
+        "y": 1078
+      },
+      "data": {
+        "courseCode": "CS3268",
+        "courseName": "Responsible AI: from Algorithms to Impact",
+        "color": "#ffeb3b",
+        "description": "This course explores fundamental challenges in deploying Responsible AI solutions in real-world applications, focusing on issues of privacy, fairness, and trustworthiness. Students will investigate both existing and cutting-edge technical approaches to preserving privacy, ensuring fairness, and verifying AI behavior. The course covers statistical, computational, algorithmic, and systems-oriented strategies, equipping students with the tools to understand and address the challenges to make AI solutions responsible-by-design."
+      },
+      "measured": {
+        "width": 288,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "CS2103T",
+      "type": "module",
+      "position": {
+        "x": 785,
+        "y": 1078
+      },
+      "data": {
+        "courseCode": "CS2103T",
+        "courseName": "Software Engineering",
+        "color": "#ffeb3b",
+        "description": "This course introduces the necessary conceptual and analytical tools for systematic and rigorous development of software systems. It covers four main areas of software development, namely object-oriented system analysis, object-oriented system modelling and design, implementation, and testing, with emphasis on system modelling and design and implementation of software courses that work cooperatively to fulfill the requirements of the system. Tools and techniques for software development, such as Unified Modelling Language (UML), program specification, and testing methods, will be taught. Major software engineering issues such as modularisation criteria, program correctness, and software quality will also be covered."
+      },
+      "measured": {
+        "width": 165,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "ES2660",
+      "type": "module",
+      "position": {
+        "x": 1119.5,
+        "y": 1078
+      },
+      "data": {
+        "courseCode": "ES2660",
+        "courseName": "Communicating in the Information Age",
+        "color": "#ffeb3b",
+        "description": "In a context of prolific production and convenient access to content and innovation in the Information Age, how should one critically process and clearly communicate ideas to various audiences? In this course, students will learn to question and articulate their analysis of assumptions and assertions on issues facing the Information Age through processes such as identifying bias and substantiating arguments. The Ennis’ (1986, 2001) taxonomy of critical thinking dispositions will be employed to develop students’ analytical thinking skills and their ability to articulate cogent responses to arguments or to defend their own positions in both written and oral form."
+      },
+      "measured": {
+        "width": 266,
+        "height": 68
+      },
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "CS1010X-CS2040S",
+      "source": "CS1010X",
+      "target": "CS2040S",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS1231S-CS2040S",
+      "source": "CS1231S",
+      "target": "CS2040S",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2040S-CS3230",
+      "source": "CS2040S",
+      "target": "CS3230",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS1231S-CS3230",
+      "source": "CS1231S",
+      "target": "CS3230",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2040S-CS2109S",
+      "source": "CS2040S",
+      "target": "CS2109S",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS1231S-CS2109S",
+      "source": "CS1231S",
+      "target": "CS2109S",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1521-CS2109S",
+      "source": "MA1521",
+      "target": "CS2109S",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2109S-CS3268",
+      "source": "CS2109S",
+      "target": "CS3268",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1521-ST2334",
+      "source": "MA1521",
+      "target": "ST2334",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "ST2334-CS3268",
+      "source": "ST2334",
+      "target": "CS3268",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2109S-CS3263",
+      "source": "CS2109S",
+      "target": "CS3263",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2040S-CS3263",
+      "source": "CS2040S",
+      "target": "CS3263",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1522-CS3263",
+      "source": "MA1522",
+      "target": "CS3263",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "ST2334-CS3263",
+      "source": "ST2334",
+      "target": "CS3263",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2109S-CS3264",
+      "source": "CS2109S",
+      "target": "CS3264",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2040S-CS3264",
+      "source": "CS2040S",
+      "target": "CS3264",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "MA1522-CS3264",
+      "source": "MA1522",
+      "target": "CS3264",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "ST2334-CS3264",
+      "source": "ST2334",
+      "target": "CS3264",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "IE2141-IE3102",
+      "source": "IE2141",
+      "target": "IE3102",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "IE3105-IE3102",
+      "source": "IE3105",
+      "target": "IE3102",
+      "data": {
+        "requirement": "all"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS1010X-CS2030S",
+      "source": "CS1010X",
+      "target": "CS2030S",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2030S-CS2103T",
+      "source": "CS2030S",
+      "target": "CS2103T",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    },
+    {
+      "id": "CS2040S-CS2103T",
+      "source": "CS2040S",
+      "target": "CS2103T",
+      "data": {
+        "requirement": "any"
+      },
+      "style": {
+        "stroke": "#888",
+        "strokeWidth": 2
+      },
+      "animated": false
+    }
+  ]
+}
