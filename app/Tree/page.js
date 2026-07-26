@@ -150,6 +150,7 @@ export default function TreePage() {
 
   const handleRemoveSelected = () => {
     setNodes((nds) => nds.filter(n => n.id !== selectedNode.id));
+    setEdges((eds) => eds.filter(edge => edge.source !== selectedNode.id && edge.target !== selectedNode.id));
     setSelectedNode(null);
   };
 
@@ -171,6 +172,11 @@ export default function TreePage() {
           treeError={treeError}
           onAddNote={handleAddNote}
         />
+
+        <div className="tree-prereq-legend" aria-label="Prerequisite edge legend">
+          <span><i className="tree-legend-line" />All required</span>
+          <span><i className="tree-legend-line tree-legend-line-any" />Any one</span>
+        </div>
 
         <ReactFlow
           nodes={nodes} edges={edges}
