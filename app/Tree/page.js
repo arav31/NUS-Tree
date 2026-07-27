@@ -22,6 +22,7 @@ import MoreMenu from '../../components/Tree/MoreMenu';
 import LayoutToolbar from '../../components/Tree/LayoutToolbar';
 import DetailPanel from '../../components/Tree/DetailPanel';
 import PrereqChoiceModal from '../../components/Tree/PrereqChoiceModal';
+import StudyPlanModal from '../../components/Tree/StudyPlanModal';
 import AddCourseModal from '../../components/AddCourseModal';
 
 export default function TreePage() {
@@ -29,6 +30,7 @@ export default function TreePage() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isStudyPlanOpen, setIsStudyPlanOpen] = useState(false);
   const [selectedNode, setSelectedNode] = useState(null);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -159,6 +161,7 @@ export default function TreePage() {
       <div className="tree-canvas-wrap">
         <MoreMenu
           onOpenAddModule={() => setIsModalOpen(true)}
+          onOpenStudyPlan={() => setIsStudyPlanOpen(true)}
           onExport={handleExport}
           onImport={handleImport}
           onClear={handleClearTree}
@@ -211,6 +214,7 @@ export default function TreePage() {
       )}
 
       <PrereqChoiceModal prompt={choicePrompt} onConfirm={resolvePrereqChoice} />
+      <StudyPlanModal open={isStudyPlanOpen} nodes={nodes} edges={edges} onClose={() => setIsStudyPlanOpen(false)} />
     </div>
   );
 }

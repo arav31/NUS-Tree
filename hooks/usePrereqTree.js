@@ -166,7 +166,7 @@ export function usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode }) {
       const module = await response.json();
       seen.set(id, {
         id, type: 'module', position: { x: depth * 280, y: 80 + seen.size * 120 },
-        data: { courseCode: id, courseName: module.title, color: depth ? '#e0f7fa' : '#ffeb3b', description: module.description }
+        data: { courseCode: id, courseName: module.title, color: depth ? '#e0f7fa' : '#ffeb3b', description: module.description, availableSemesters: module.semesterData || [] }
       });
       let prereqEntries;
       if (module.prereqTree) {

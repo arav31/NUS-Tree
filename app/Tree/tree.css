@@ -328,6 +328,32 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
+.tree-plan-card {
+  width: min(760px, 94vw); max-height: 88vh; overflow-y: auto;
+}
+
+.tree-plan-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 18px 0;
+}
+
+.tree-plan-semester {
+  min-height: 84px; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #f9fafb;
+}
+
+.tree-plan-semester h3 {
+  margin: 0 0 6px; font-size: 0.9rem;
+}
+
+.tree-plan-semester span { color: #6b7280; }
+
+.tree-plan-warnings {
+  margin-bottom: 16px; padding: 10px; border-left: 3px solid #dc2626; background: #fef2f2;
+}
+
+.tree-plan-valid {
+  border-color: #059669; background: #ecfdf5;
+}
+
 .tree-modal-title {
   margin: 0 0 8px;
 }

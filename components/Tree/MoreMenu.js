@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 
-export default function MoreMenu({ onOpenAddModule, onExport, onImport, onClear }) {
+export default function MoreMenu({ onOpenAddModule, onOpenStudyPlan, onExport, onImport, onClear }) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -38,6 +38,9 @@ export default function MoreMenu({ onOpenAddModule, onExport, onImport, onClear 
         <div className="tree-more-dropdown">
           <button onClick={runAndClose(onOpenAddModule)} className="tree-more-item">
             + Add Module Manually
+          </button>
+          <button onClick={runAndClose(onOpenStudyPlan)} className="tree-more-item">
+            View Study Plan
           </button>
           <button onClick={runAndClose(onExport)} className="tree-more-item">
             Export JSON
