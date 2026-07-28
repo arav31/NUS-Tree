@@ -137,11 +137,52 @@
       z-index: 1;
     }
     .step:last-child:after { content: ""; }
-    .demo {
+    .ui-gallery {
       display: grid;
-      grid-template-columns: 1.15fr .85fr;
+      grid-template-columns: 1.22fr .78fr;
       gap: 28px;
-      align-items: stretch;
+      height: 540px;
+    }
+    .ui-stack {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 22px;
+      min-height: 0;
+    }
+    .ui-shot {
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+      border: 8px solid #0b65a5;
+      border-radius: 20px;
+      background: #eef6fa;
+      min-height: 0;
+    }
+    .ui-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+      display: block;
+    }
+    .ui-shot figcaption {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      max-width: calc(100% - 36px);
+      border-radius: 14px;
+      padding: 12px 18px;
+      color: #fff;
+      background: #101827e8;
+      font-size: 24px;
+      line-height: 1.16;
+      box-shadow: 0 5px 16px #0004;
+    }
+    .ui-shot figcaption b {
+      color: #8fe7ff;
+    }
+    .ui-main figcaption {
+      font-size: 27px;
     }
     .graph {
       background: #f7fbff;
@@ -201,7 +242,7 @@
       color: #e2ffe8;
       padding: 32px;
       font: 29px/1.36 Menlo, Consolas, monospace;
-      min-height: 430px;
+      min-height: 540px;
       white-space: pre-wrap;
     }
     .mini-grid {
@@ -293,7 +334,7 @@
     </div>
     <h1>NUS-TREE</h1>
     <div class="byline">By: Arav Cabral & Raghuveer Singh</div>
-    <p class="subtitle">A visual dependency mapper for NUS modules. The current build connects to live NUSMods data, builds a prerequisite tree, and keeps the graph editable for planning.</p>
+    <p class="subtitle">A visual degree planner for NUS students. The current build maps live prerequisite data, preserves alternative paths, and checks a four-year semester plan.</p>
   </header>
 
   <section class="grid">
@@ -304,47 +345,39 @@
 
     <article class="card orange">
       <h2>Current Solution</h2>
-      <p>NUS-Tree turns module planning into a graph. A student enters a module code, our Next.js API route fetches the matching NUSMods record, and My Tree expands the prerequisite modules it finds. The student can then inspect the dependency path visually instead of checking modules one by one.</p>
+      <p>NUS-Tree turns a degree plan into one editable graph. Students can load one or more target modules from NUSMods, choose between valid prerequisite alternatives, combine the results with templates or manual modules, assign semesters, and check the plan before registration.</p>
     </article>
 
     <article class="card green span2">
       <span class="note">What is actually working right now</span>
-      <p class="explain">The prototype now uses real module data. It reads the selected target module, calls the backend route, normalizes the NUSMods response, extracts module codes from the prerequisite text, and recursively visits those modules until the graph is built.</p>
+      <p class="explain">The app reads NUSMods' structured prerequisite tree, preserves AND, OR, and “n of” rules, asks the student which valid alternative they plan to take, and merges every resolved dependency into a persistent React Flow canvas.</p>
       <div class="flow">
-        <div class="step">Type module code</div>
-        <div class="step">Call our API route</div>
-        <div class="step">Fetch NUSMods V2</div>
-        <div class="step">Recursively scan prereqs</div>
-        <div class="step">Render My Tree</div>
+        <div class="step">Enter one or more targets</div>
+        <div class="step">Fetch live NUSMods data</div>
+        <div class="step">Resolve AND / OR / n-of</div>
+        <div class="step">Merge + auto-arrange</div>
+        <div class="step">Assign semesters + validate</div>
       </div>
     </article>
 
     <article class="card white span2">
-      <h2>Live Demo: My Tree from CS2040S</h2>
-      <p class="explain">The tree view starts from a target module such as CS2040S. The yellow/orange target node is the module the student wants to take, and blue nodes are prerequisite modules discovered from NUSMods. Users can still pan, zoom, edit nodes, add notes, connect nodes manually, and auto-align the layout.</p>
-      <div class="demo">
-        <div class="graph">
-          <div class="edge" style="left:270px; top:128px; width:370px; transform:rotate(20deg);"></div>
-          <div class="edge" style="left:270px; top:304px; width:370px; transform:rotate(-20deg);"></div>
-          <div class="edge" style="left:625px; top:216px; width:300px; transform:rotate(0deg);"></div>
-          <div class="edge" style="left:590px; top:90px; width:340px; transform:rotate(22deg);"></div>
-          <div class="node" style="left:82px; top:92px;">CS1010</div>
-          <div class="node" style="left:82px; top:268px;">CS1010S</div>
-          <div class="node" style="left:452px; top:58px;">CS1101S</div>
-          <div class="node" style="left:466px; top:176px;">CS1231S</div>
-          <div class="node target" style="left:802px; top:176px;">CS2040S</div>
+      <h2>Tested UI Flows: Build, Combine, Validate</h2>
+      <p class="explain">These captured UI scenarios show the current planner working end to end: combining multiple targets, preserving prerequisite meaning, and turning the canvas into a checked four-year study plan.</p>
+      <div class="ui-gallery">
+        <figure class="ui-shot ui-main">
+          <img src="../output/playwright/issue-8-multi-tree.png" alt="Two target modules combined into one NUS-Tree canvas" />
+          <figcaption><b>1 · Combine goals</b> — load CS3210 and CS4248 together, merge shared prerequisites, and keep both targets visible.</figcaption>
+        </figure>
+        <div class="ui-stack">
+          <figure class="ui-shot">
+            <img src="../output/playwright/prerequisite-rules.png" alt="Solid and dashed prerequisite rules on the NUS-Tree canvas" />
+            <figcaption><b>2 · Preserve meaning</b> — solid links mean ALL required; dashed links mean ANY one.</figcaption>
+          </figure>
+          <figure class="ui-shot">
+            <img src="../output/playwright/semester-study-plan.png" alt="Four-year study plan showing semester and prerequisite warnings" />
+            <figcaption><b>3 · Validate the plan</b> — flag semester availability and prerequisite-order warnings.</figcaption>
+          </figure>
         </div>
-        <div class="code">GET /api/module?code=CS2040S
-
-returns:
-moduleCode
-title
-description
-prerequisite
-semesterData
-
-Academic year is picked
-from the current date.</div>
       </div>
     </article>
 
@@ -352,7 +385,7 @@ from the current date.</div>
       <div class="strip">
         <div>
           <h2>Built So Far</h2>
-          <p>Live NUSMods lookup is integrated on the home page and in My Tree. The backend chooses the academic year from the current date and returns a clean object with the module code, title, description, prerequisite text, and semester availability. The frontend uses React Flow so the generated graph remains interactive instead of being a static image.</p>
+          <p>Live NUSMods lookup now powers multi-target prerequisite trees with guided alternative choices. Students can edit and colour nodes, add notes and links, load templates, save automatically, import or export JSON, arrange the graph three ways, and review a validated four-year study plan.</p>
         </div>
         <div class="tech">
           <span class="pill">Next.js</span>
@@ -367,40 +400,40 @@ from the current date.</div>
       <div class="mini">
         <h3>What changed</h3>
         <ul>
-          <li><b>My Tree is no longer hardcoded:</b> the graph is generated from the selected module code.</li>
-          <li><b>Home page lookup works:</b> users can load real NUSMods module details before exploring.</li>
-          <li><b>Errors are handled:</b> missing or invalid module codes return friendly messages instead of crashing.</li>
-          <li><b>Canvas tools remain:</b> editing, notes, manual links, and layout helpers still work with generated nodes.</li>
+          <li><b>Prerequisite meaning:</b> structured AND, OR, and “n of” groups are preserved and shown as solid or dashed links.</li>
+          <li><b>Multiple goals:</b> several target codes can be loaded and merged into the same planning canvas.</li>
+          <li><b>Planning tools:</b> improved Auto Arrange, grid alignment, shuffle, styling, notes, and manual connections.</li>
+          <li><b>Save + reuse:</b> local persistence, JSON import/export, clear-tree controls, and a template gallery.</li>
         </ul>
       </div>
       <div class="mini">
         <h3>Testing + CI</h3>
         <ul>
-          <li><b>API tests:</b> check NUSMods response normalization, invalid modules, and missing module codes.</li>
-          <li><b>Academic year:</b> tests cover both the dynamic default year and explicit year override.</li>
-          <li><b>Browser tests:</b> Playwright smoke tests confirm the main pages and navigation still load.</li>
-          <li><b>CI workflow:</b> GitHub Actions runs install, unit tests, build, and browser checks.</li>
+          <li><b>Prerequisite rules:</b> UI checks show solid ALL-required links and dashed ANY-one alternatives.</li>
+          <li><b>Multi-target merge:</b> test scenarios combine two goals while reusing shared dependency nodes.</li>
+          <li><b>Plan validation:</b> captured warnings cover unavailable semesters and prerequisites scheduled too late.</li>
+          <li><b>CI workflow:</b> GitHub Actions runs API tests, the production build, and Playwright browser checks.</li>
         </ul>
       </div>
       <div class="mini">
         <h3>Known limits + next</h3>
         <ul>
-          <li><b>Logic parser:</b> distinguish AND requirements from OR alternatives instead of flattening them.</li>
-          <li><b>Multiple goals:</b> combine several Level 3000/4000 targets into one planning tree.</li>
-          <li><b>NUSMods import:</b> import a plan and validate prerequisites by semester order.</li>
-          <li><b>Unlocks View:</b> show what future modules become available after taking a module.</li>
+          <li><b>Unlocks View:</b> reverse the graph to show which future modules a completed module opens up.</li>
+          <li><b>NUSMods plan import:</b> accept a NUSMods study plan directly, beyond NUS-Tree's own JSON format.</li>
+          <li><b>Richer validation:</b> cover workload, degree requirements, and more complex prerequisite conditions.</li>
+          <li><b>Recommendations:</b> suggest alternative modules and paths when a preferred option is unavailable.</li>
         </ul>
       </div>
     </article>
 
     <article class="span2 roadmap">
       <div class="road teal">
-        <h3>Why this already helps</h3>
-        <p>The current prototype answers the first planning question: "What do I need before this module?" Instead of manually opening several NUSMods pages, students can generate a visual starting point, inspect the prerequisites, and then adjust the graph with notes or manual edits for their own plan.</p>
+        <h3>Why this helps now</h3>
+        <p>Students can answer “What do I need before these modules, which valid path will I take, and does my semester order work?” in one place. The canvas remains editable, so the generated tree becomes a personal degree roadmap rather than a static lookup.</p>
       </div>
       <div class="road orange">
         <h3>Next build target</h3>
-        <p>The biggest remaining gap is prerequisite meaning. Some NUSMods text says "take all of these"; other text says "take one of these". The next version should preserve that distinction visually, then support multi-target trees and NUSMods plan import.</p>
+        <p>The next step is a true post-requisite “Unlocks” view, followed by direct NUSMods plan import and broader degree checks. Together, these would help students see both where they can go next and whether their full plan satisfies the path.</p>
       </div>
     </article>
   </section>

@@ -13,7 +13,7 @@ import './tree.css';
 
 import { nodeTypes, initialNodes, initialEdges, defaultEdgeOptions, edgeStyle } from '../../lib/treeFlowConfig';
 import { autoArrange, autoAlign, shuffleLayout } from '../../lib/treeLayout';
-import { downloadTreeAsJson, parseTreeJson } from '../../lib/treeStorage';
+import { downloadTreeAsJson, parseTreeJson, parseNusmodsPlan } from '../../lib/treeStorage';
 import { usePrereqTree } from '../../hooks/usePrereqTree';
 import { useEdgeHighlighting } from '../../hooks/useEdgeHighlighting';
 import { useTreePersistence } from '../../hooks/useTreePersistence';
@@ -36,7 +36,7 @@ export default function TreePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
 
-  const { moduleCode, setModuleCode, treeError, isLoadingTree, loadPrereqTree, choicePrompt, resolvePrereqChoice } =
+  const { moduleCode, setModuleCode, treeMode, setTreeMode, treeError, isLoadingTree, loadPrereqTree, choicePrompt, resolvePrereqChoice } =
     usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode });
 
   const startEdit = () => {
@@ -82,7 +82,7 @@ export default function TreePage() {
   const handleImport = async (file) => {
     try {
       const text = await file.text();
-      const imported = parseTreeJson(text);
+      const imported = text.includes('"timetable"') ? await parseNusmodsPlan(text) : parseTreeJson(text);
       if (nodes.length > 0 && !window.confirm('Importing will replace your current canvas. Continue?')) {
         return;
       }
@@ -169,6 +169,8 @@ export default function TreePage() {
         <CanvasToolbar
           moduleCode={moduleCode}
           onModuleCodeChange={setModuleCode}
+          treeMode={treeMode}
+          onTreeModeChange={setTreeMode}
           onSubmit={loadPrereqTree}
           isLoadingTree={isLoadingTree}
           treeError={treeError}

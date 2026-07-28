@@ -7,6 +7,7 @@ export function usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode }) {
   const [moduleCode, setModuleCode] = useState('CS2040S'); //Prefill 2040
   const [treeError, setTreeError] = useState('');
   const [isLoadingTree, setIsLoadingTree] = useState(false);
+  const [treeMode, setTreeMode] = useState('prereqs');
   const [choicePrompt, setChoicePrompt] = useState(null);
   const choiceResolverRef = useRef(null);
 
@@ -168,6 +169,14 @@ export function usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode }) {
         id, type: 'module', position: { x: depth * 280, y: 80 + seen.size * 120 },
         data: { courseCode: id, courseName: module.title, color: depth ? '#e0f7fa' : '#ffeb3b', description: module.description, availableSemesters: module.semesterData || [] }
       });
+      if (treeMode === 'unlocks') {
+        for (const unlocked of module.fulfillRequirements || []) {
+          if (await visit(unlocked, depth + 1)) {
+            nextEdges.push({ id: `${id}-${unlocked}`, source: id, target: unlocked, data: { requirement: 'all' }, style: edgeStyle('all') });
+          }
+        }
+        return true;
+      }
       let prereqEntries;
       if (module.prereqTree) {
         prereqEntries = await resolvePrereqNode(module.prereqTree, 'all', id, module.title, isAlreadyPresent);
@@ -236,5 +245,5 @@ export function usePrereqTree({ nodes, setNodes, setEdges, setSelectedNode }) {
     setIsLoadingTree(false);
   };
 
-  return { moduleCode, setModuleCode, treeError, isLoadingTree, loadPrereqTree, choicePrompt, resolvePrereqChoice };
+  return { moduleCode, setModuleCode, treeMode, setTreeMode, treeError, isLoadingTree, loadPrereqTree, choicePrompt, resolvePrereqChoice };
 }
