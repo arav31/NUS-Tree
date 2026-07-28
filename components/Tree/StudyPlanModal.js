@@ -8,13 +8,15 @@ export default function StudyPlanModal({ open, nodes, edges, onClose }) {
   const warnings = [];
 
   modules.forEach(({ data }) => {
+    if (data.planWarning) warnings.push(data.planWarning);
     if (!data.semester || !data.availableSemesters?.length) return;
     const term = Number(data.semester.at(-1));
     if (!data.availableSemesters.includes(term)) {
       warnings.push(`${data.courseCode} is not offered in Semester ${term}.`);
     }
   });
-  edges.forEach(({ source, target }) => {
+  edges.forEach(({ source, target, data }) => {
+    if (data?.importedPlan) return;
     const prereq = byId.get(source)?.data;
     const module = byId.get(target)?.data;
     if (semesterOrder.has(prereq?.semester) && semesterOrder.has(module?.semester)

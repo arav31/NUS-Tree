@@ -34,6 +34,7 @@ export async function GET(request) {
     description: module.description,
     prerequisite: module.prerequisite || null,
     prereqTree: module.prereqTree || null,
+    fulfillRequirements: module.fulfillRequirements || [],
     semesterData: (module.semesterData || []).map((item) => item.semester),
   });
 }

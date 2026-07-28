@@ -46,7 +46,7 @@ export default function MoreMenu({ onOpenAddModule, onOpenStudyPlan, onExport, o
             Export JSON
           </button>
           <button onClick={() => fileInputRef.current.click()} className="tree-more-item">
-            Import JSON
+            Import Tree / NUSMods JSON
           </button>
           <button onClick={runAndClose(onClear)} className="tree-more-item tree-more-item-danger">
             Clear Tree
