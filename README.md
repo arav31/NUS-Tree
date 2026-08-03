@@ -39,7 +39,7 @@ We personally realised we could only take some courses in year 4 now due to thei
 |---|---|
 | Project Name | NUS-Tree |
 | Team Name | RAAR |
-| Level of Achievement | Apollo 11 |
+| Level of Achievement | Gemini |
 | Project Type | Visual module planning system |
 | Primary Users | NUS students |
 | Data Source | NUSMods API |
