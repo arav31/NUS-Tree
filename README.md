@@ -6,11 +6,11 @@ A visual dependency graph system for NUS module planning.
 
 ## Foreword by developers
 
-We decided to build NUS-Tree because we personally made some "mistakes" planning our modules. NUS-Tree aims to make it easier to plan for your courses and pick the most the interesting courses available to you even if you don't get your first choice.
+We decided to build NUS-Tree because we personally made some "mistakes" planning our modules. NUS-Tree aims to make it easier to plan your courses and pick the most interesting courses available to you, even if you don't get your first choice.
 
-NUS-Tree helps you visualise the full path to any course you may potentially want to take, showing the full series of courses you would need to take in a glance. In addition, we also have a post requisite tree, letting you see what courses you have just unlocked with your previous course. Our overall goal with NUS-Tree is to make module planning easier to help students take more exciting courses through their school tenure.
+NUS-Tree helps you visualise the full path to any course you may want to take, showing the required sequence at a glance. It also has an Unlocks view showing the future courses enabled by an earlier course. Our goal is to make long-term module planning easier throughout university.
 
-We personally realised we could only take some courses in year 4 now due to their dependencies and the some courses being semester 1 or semester 2 only. Seeing as this was a problem we faced, we thought it would be good to prevent others from facing the same issues in the future.
+We realised some courses would only be available to us in Year 4 because of their dependencies and semester-specific availability. We built NUS-Tree to help others identify these constraints earlier.
 ---
 
 ## Table of Contents
@@ -31,6 +31,9 @@ We personally realised we could only take some courses in year 4 now due to thei
 14. [Testing Plan](#testing-plan)
 15. [CI/CD Plan](#cicd-plan)
 16. [Milestone Scope](#milestone-scope)
+17. [Risk Analysis](#risk-analysis)
+18. [Setup Instructions](#setup-instructions)
+19. [Verification Commands](#verification-commands)
 ---
 
 ## Project Information
@@ -57,7 +60,7 @@ The system is designed to support:
 
 - Recursive prerequisite visualisation
 - Reverse prerequisite or "post" requisite visualisation
-- AND/OR prerequisite logic parsing (similar to NUSmods)
+- Structured AND/OR/n-of prerequisite resolution using NUSMods data
 - Semester availability awareness
 - NUSMods plan import and validation
 - Automated testing and CI/CD workflows
@@ -92,7 +95,7 @@ Current pain points include:
 
 5. Late Prerequisite discovery
 
-   A student may only realise in Year 3 or Year 4 that they missed a key Year 1 or Year 2 prerequisite, potentially affecting graduation planning or potenitally causing the student to miss out on an interesting course.
+   A student may only realise in Year 3 or Year 4 that they missed a key Year 1 or Year 2 prerequisite, potentially affecting graduation planning or causing them to miss an interesting course.
 
 ---
 
@@ -161,21 +164,25 @@ As a student who failed to get into a specific module, I want to see a visual ma
 
 ## Feature Overview
 
-| Feature                       | Category  | Milestone Target | Description                                       |
-| ----------------------------- | --------- | ---------------- | ------------------------------------------------- |
-| NUSMods API Integration       | Core      | MS2              | Fetch real module data from NUSMods               |
-| Module Search and Detail View | Core      | MS2              | Search module codes and display module metadata   |
-| Basic Dependency Graph        | Core      | MS2              | Render a one-level prerequisite graph             |
-| Recursive Dependency Graph    | Core      | MS2              | Expand prerequisite graph recursively             |
-| Unlocks View                  | Core      | MS2              | Show future modules unlocked by selected module   |
-| Logic Parser                  | Extension | MS3              | Parse AND/OR prerequisite logic                   |
-| NUSMods JSON Import           | Extension | MS3              | Import planned modules and validate prerequisites |
-| Semester Availability Overlay | Extension | MS3              | Display Sem 1 / Sem 2 / both availability         |
-| Path Recommendation Engine    | Extension | MS3+             | Suggest alternative module paths                  |
+| Feature                       | Category  | Target | Status      | Description                                       |
+| ----------------------------- | --------- | ------ | ----------- | ------------------------------------------------- |
+| NUSMods API Integration       | Core      | MS2    | Implemented | Fetch real module data from NUSMods               |
+| Module Search and Detail View | Core      | MS2    | Implemented | Search module codes and display module metadata   |
+| Basic Dependency Graph        | Core      | MS2    | Implemented | Render a one-level prerequisite graph             |
+| Recursive Dependency Graph    | Core      | MS2    | Implemented | Expand and combine prerequisite graphs recursively |
+| Unlocks View                  | Core      | MS2    | Implemented | Show direct and indirect modules unlocked         |
+| Logic Resolver                | Extension | MS3    | Implemented | Resolve structured AND, OR, and n-of requirements |
+| NUSMods JSON Import           | Extension | MS3    | Implemented | Import plans and flag invalid prerequisite order  |
+| Semester Planning             | Extension | MS3    | Implemented | Summarise four years and validate module offerings |
+| Path Recommendation Engine    | Extension | MS3+   | Planned     | Suggest alternative module paths                  |
+
+The current planner also supports local persistence, NUS-Tree JSON export/import, multiple roots, shared-prerequisite deduplication, editable modules and notes, templates, and automatic layout tools.
 
 ---
 
 # Detailed Feature Specification
+
+The sections below combine current implementation details with remaining design goals. The feature overview above is the source of truth for implementation status.
 
 ## Feature 1: NUSMods API Integration Layer
 
@@ -187,7 +194,7 @@ This layer prevents the UI and graph logic from depending directly on external A
 
 ### Responsibilities
 
-The API layer will:
+The API layer:
 
 * Fetch module metadata from the NUSMods API
 * Retrieve module code, title, description, prerequisites, and semester availability
@@ -228,6 +235,8 @@ type NormalizedModule = {
   title: string;
   description: string;
   prerequisite: string | null;
+  prereqTree: PrerequisiteTree | null;
+  fulfillRequirements: string[];
   semesterData: number[];
 };
 ```
@@ -435,27 +444,25 @@ Module → Future modules unlocked by this module
 
 ### Responsibilities
 
-The Unlocks Engine should:
+The Unlocks Engine:
 
-* Build a reverse adjacency list
-* Find modules that depend on the selected module
-* Traverse outward to find indirect unlocks
-* Render unlock relationships as a graph
-* Allow switching between Prerequisite View and Unlocks View
+* Reads each module's NUSMods `fulfillRequirements` list
+* Traverses outward to find indirect unlocks
+* Renders unlock relationships as a graph
+* Allows switching between Prerequisite View and Unlocks View
 
 ### Algorithm Sketch
 
 ```ts
 function buildUnlockGraph(moduleCode: string) {
-  const reverseMap = buildReverseDependencyMap(allModules);
-
   const queue = [moduleCode];
   const visited = new Set();
 
   while (queue.length > 0) {
     const current = queue.shift();
 
-    for (const unlockedModule of reverseMap[current]) {
+    const module = await fetchModule(current);
+    for (const unlockedModule of module.fulfillRequirements ?? []) {
       if (!visited.has(unlockedModule)) {
         visited.add(unlockedModule);
         addEdge(current, unlockedModule);
@@ -478,7 +485,7 @@ function buildUnlockGraph(moduleCode: string) {
 
 ---
 
-## Feature 5: Prerequisite Logic Parser
+## Feature 5: Prerequisite Logic Resolution
 
 ### Overview
 
@@ -490,7 +497,7 @@ Example:
 CS2040 and (CS2100 or EE2024)
 ```
 
-NUS-Tree should parse these strings into a structured representation so they can be visualised accurately.
+NUS-Tree primarily resolves NUSMods' structured `prereqTree`. When structured data is unavailable, it falls back to extracting module codes from prerequisite text.
 
 ### Supported Logic
 
@@ -505,33 +512,19 @@ NUS-Tree should parse these strings into a structured representation so they can
 
 ```mermaid
 flowchart LR
-    A[Raw prerequisite string] --> B[Preprocessing]
-    B --> C[Tokenization]
-    C --> D[Graph Nodes and Logic Branches]
+    A[NUSMods prereqTree] --> B[Resolve and/or/nOf groups]
+    B --> C[Prompt for valid alternatives]
+    C --> D[Graph nodes and ALL/ANY edges]
 ```
 
 ### AST Model
 
 ```ts
 type PrerequisiteAST =
-  | ModuleNode
-  | AndNode
-  | OrNode;
-
-type ModuleNode = {
-  type: "MODULE";
-  moduleCode: string;
-};
-
-type AndNode = {
-  type: "AND";
-  children: PrerequisiteAST[];
-};
-
-type OrNode = {
-  type: "OR";
-  children: PrerequisiteAST[];
-};
+  | string
+  | { and: PrerequisiteAST[] }
+  | { or: PrerequisiteAST[] }
+  | { nOf: [number, PrerequisiteAST[]] };
 ```
 
 ### Example AST
@@ -546,39 +539,21 @@ Output:
 
 ```json
 {
-  "type": "AND",
-  "children": [
-    {
-      "type": "MODULE",
-      "moduleCode": "CS2040"
-    },
-    {
-      "type": "OR",
-      "children": [
-        {
-          "type": "MODULE",
-          "moduleCode": "CS2100"
-        },
-        {
-          "type": "MODULE",
-          "moduleCode": "EE2024"
-        }
-      ]
-    }
+  "and": [
+    "CS2040",
+    { "or": ["CS2100", "EE2024"] }
   ]
 }
 ```
 
 ### Success Criteria
 
-| Requirement    | Criteria                                |
-| -------------- | --------------------------------------- |
-| Simple parsing | Single module string becomes ModuleNode |
-| AND parsing    | AND expression becomes AndNode          |
-| OR parsing     | OR expression becomes OrNode            |
-| Nested parsing | Parentheses are preserved correctly     |
-| Invalid format | System falls back to raw string display |
-| Determinism    | Same input always produces same AST     |
+| Requirement         | Criteria                                      |
+| ------------------- | --------------------------------------------- |
+| Structured groups   | `and`, `or`, and `nOf` are resolved correctly |
+| Nested requirements | Compound branches retain their grouping       |
+| Alternatives        | Users choose valid OR/n-of options            |
+| Missing structure   | Module codes are extracted from fallback text |
 
 ---
 
@@ -616,13 +591,12 @@ flowchart TD
 
 ### Node Types
 
-| Node Type         | Description                          |
-| ----------------- | ------------------------------------ |
-| Target node       | The module selected by the user      |
-| Prerequisite node | A required module                    |
-| Unlock node       | A module unlocked by selected module |
-| Logic node        | AND/OR relationship node             |
-| Warning node      | Missing or problematic requirement   |
+| Node Type | Description                                      |
+| --------- | ------------------------------------------------ |
+| Module    | A course used as a target, prerequisite, or unlock |
+| Note      | An editable reminder placed on the canvas        |
+
+Target, prerequisite, unlock, and warning states are represented through node data, colors, and edge direction rather than separate node types.
 
 ### Success Criteria
 
@@ -653,19 +627,20 @@ A module may be available in:
 
 ```ts
 type SemesterAvailability = {
-  sem1: boolean;
-  sem2: boolean;
+  availableSemesters: number[];
+  assignedSemester?: "Y1S1" | "Y1S2" | "Y2S1" | "Y2S2" |
+    "Y3S1" | "Y3S2" | "Y4S1" | "Y4S2";
 };
 ```
 
 ### Visual Encoding
 
-| Availability    | Visual Meaning               |
-| --------------- | ---------------------------- |
-| Semester 1 only | Sem 1 label / indicator      |
-| Semester 2 only | Sem 2 label / indicator      |
-| Both semesters  | Both labels                  |
-| Unknown         | Warning or neutral indicator |
+| State                    | Visual Meaning                              |
+| ------------------------ | ------------------------------------------- |
+| Assigned semester       | Module appears in the four-year plan grid   |
+| Unavailable assignment  | Study-plan warning for the selected term    |
+| Invalid prerequisite order | Study-plan warning for same/later prerequisite |
+| Unassigned              | Module appears in the Unassigned group      |
 
 ### Purpose
 
@@ -676,7 +651,7 @@ This feature helps students avoid plans that are logically valid but practically
 | Requirement             | Criteria                                    |
 | ----------------------- | ------------------------------------------- |
 | Availability extraction | Semester data is extracted from module data |
-| Node annotation         | Graph nodes display semester information    |
+| Plan summary            | Modules are grouped from Y1S1 through Y4S2  |
 | Planning usefulness     | Students can identify semester-only modules |
 | Graceful fallback       | Missing availability does not crash graph   |
 
@@ -695,19 +670,18 @@ flowchart TD
     A[User uploads NUSMods JSON] --> B[Parse planned modules]
     B --> C[Map modules to semesters]
     C --> D[Compare against prerequisite graph]
-    D --> E[Highlight completed modules]
-    D --> F[Highlight planned modules]
-    D --> G[Flag missing prerequisites]
+    D --> E[Build planned module graph]
+    D --> F[Flag missing or late prerequisites]
 ```
 
 ### Graph States
 
 | State     | Meaning                                                |
 | --------- | ------------------------------------------------------ |
-| Completed | User has already completed the module                  |
-| Planned   | User plans to take the module                          |
-| Missing   | Required prerequisite not found before target semester |
-| Target    | Module currently being inspected                       |
+| Planned   | Module imported into its assigned semester             |
+| Valid     | Structured prerequisite expression is satisfied earlier |
+| Invalid   | Required prerequisite is absent or not scheduled earlier |
+| Completed | Optional imported codes count as already satisfied      |
 
 ### Success Criteria
 
@@ -775,14 +749,13 @@ flowchart TD
     API --> NUSMods[NUSMods API]
     NUSMods --> Normalize[Data Normalization Layer]
 
-    Normalize --> Parser[Prerequisite Parser]
-    Parser --> GraphEngine[Graph Builder Engine]
-    GraphEngine --> UnlockEngine[Unlocks Engine]
+    Normalize --> Parser[Prerequisite Resolver]
+    Parser --> GraphEngine[usePrereqTree Graph Builder]
+    GraphEngine --> UnlockEngine[fulfillRequirements Traversal]
     GraphEngine --> GraphUI
 
-    Parser --> Tests[Jest Unit Tests]
+    API --> Tests[node:test API Tests]
     GraphEngine --> Tests
-    UI --> ComponentTests[React Testing Library]
     UI --> E2E[Playwright E2E Tests]
 ```
 
@@ -808,17 +781,16 @@ flowchart TB
     end
 
     subgraph Business_Logic_Layer[Business Logic Layer]
-        C1[Prerequisite Parser]
-        C2[AST Builder]
-        C3[Graph Builder]
-        C4[Recursive Traversal Engine]
-        C5[Unlocks Engine]
-        C6[Plan Validator]
+        C1[usePrereqTree Resolver]
+        C2[Recursive Graph Traversal]
+        C3[Unlocks Traversal]
+        C4[Tree Layout]
+        C5[Plan Import and Validation]
     end
 
     subgraph Testing_Layer[Testing Layer]
-        D1[Jest]
-        D2[React Testing Library]
+        D1[node:test]
+        D2[Planned React Testing Library]
         D3[Playwright]
         D4[GitHub Actions]
     end
@@ -841,7 +813,7 @@ sequenceDiagram
     participant UI as Next.js UI
     participant API as Next.js Server Route
     participant N as NUSMods API
-    participant P as Parser
+    participant P as Prerequisite Resolver
     participant G as Graph Engine
     participant R as React Flow
 
@@ -851,8 +823,8 @@ sequenceDiagram
     N-->>API: Return raw module data
     API->>API: Normalize response
     API-->>UI: Return clean module object
-    UI->>P: Parse prerequisite string
-    P-->>G: Return AST / prerequisite list
+    UI->>P: Resolve structured prereqTree
+    P-->>G: Return selected prerequisite list
     G-->>R: Generate nodes and edges
     R-->>U: Display interactive graph
 ```
@@ -868,69 +840,45 @@ NUS-Tree uses **Next.js as a full-stack framework**, using it for:
 * Server-side API abstraction
 * Route handlers
 * Data preprocessing
-* Future caching logic
+* Daily upstream response caching
 * Deployment through Vercel
 
 This design reduces the need for a separate backend during early development while still allowing clean separation between frontend, server logic, and business logic.
 
 ---
 
-## Suggested Repository Structure
+## Repository Structure
 
 ```text
 nus-tree/
 ├── app/
-│   ├── page.tsx
-│   ├── layout.tsx
-│   ├── globals.css
-│   └── api/
-│       └── modules/
-│           └── route.ts
-│
+│   ├── api/{module,templates}/
+│   ├── Explore/
+│   ├── Tree/
+│   ├── layout.js
+│   └── page.js
 ├── components/
-│   ├── ModuleSearch.tsx
-│   ├── ModuleCard.tsx
-│   ├── GraphCanvas.tsx
-│   ├── GraphNode.tsx
-│   ├── ViewToggle.tsx
-│   └── WarningPanel.tsx
-│
+│   ├── Explore/
+│   ├── Tree/
+│   ├── ModuleNode.js
+│   └── NoteNode.js
+├── hooks/
+│   ├── usePrereqTree.js
+│   ├── useEdgeHighlighting.js
+│   └── useTreePersistence.js
 ├── lib/
-│   ├── nusmods.ts
-│   ├── normalizeModule.ts
-│   ├── prereqParser.ts
-│   ├── astBuilder.ts
-│   ├── graphBuilder.ts
-│   ├── unlocksBuilder.ts
-│   ├── planValidator.ts
-│   └── cache.ts
-│
-├── types/
-│   ├── module.ts
-│   ├── graph.ts
-│   └── prereq.ts
-│
+│   ├── treeFlowConfig.js
+│   ├── treeLayout.js
+│   ├── treeStorage.js
+│   └── templates.js
 ├── tests/
-│   ├── unit/
-│   │   ├── prereqParser.test.ts
-│   │   ├── graphBuilder.test.ts
-│   │   ├── unlocksBuilder.test.ts
-│   │   └── normalizeModule.test.ts
-│   ├── components/
-│   │   ├── ModuleSearch.test.tsx
-│   │   ├── ModuleCard.test.tsx
-│   │   └── GraphCanvas.test.tsx
-│   └── e2e/
-│       ├── module-search.spec.ts
-│       ├── graph-render.spec.ts
-│       └── json-import.spec.ts
-│
-├── public/
+│   ├── unit/moduleRoute.test.js
+│   └── e2e/navigation.spec.js
+├── custom-templates/
+├── .github/workflows/ci.yml
 ├── README.md
 ├── package.json
-├── playwright.config.ts
-├── jest.config.ts
-└── next.config.js
+└── playwright.config.js
 ```
 
 ---
@@ -945,7 +893,9 @@ type Module = {
   title: string;
   description: string;
   prerequisite: string | null;
-  semesterData: SemesterAvailability;
+  prereqTree: PrerequisiteAST | null;
+  fulfillRequirements: string[];
+  semesterData: number[];
 };
 ```
 
@@ -953,24 +903,10 @@ type Module = {
 
 ```ts
 type PrerequisiteAST =
-  | ModuleNode
-  | AndNode
-  | OrNode;
-
-type ModuleNode = {
-  type: "MODULE";
-  moduleCode: string;
-};
-
-type AndNode = {
-  type: "AND";
-  children: PrerequisiteAST[];
-};
-
-type OrNode = {
-  type: "OR";
-  children: PrerequisiteAST[];
-};
+  | string
+  | { and: PrerequisiteAST[] }
+  | { or: PrerequisiteAST[] }
+  | { nOf: [number, PrerequisiteAST[]] };
 ```
 
 ## Graph Data
@@ -983,20 +919,23 @@ type GraphData = {
 
 type GraphNode = {
   id: string;
-  type: "target" | "prerequisite" | "unlock" | "logic" | "warning";
+  type: "module" | "note";
   data: {
-    label: string;
-    moduleCode?: string;
-    title?: string;
-    semesterData?: SemesterAvailability;
+    courseCode?: string;
+    courseName?: string;
+    description?: string;
+    semester?: string;
+    availableSemesters?: number[];
+    text?: string;
   };
+  position: { x: number; y: number };
 };
 
 type GraphEdge = {
   id: string;
   source: string;
   target: string;
-  label?: string;
+  data?: { requirement?: "all" | "any" };
 };
 ```
 
@@ -1011,7 +950,7 @@ Used to build the dependency graph from a target module.
 ```mermaid
 flowchart TD
     A[Start with target module] --> B[Fetch module data]
-    B --> C[Parse prerequisite string]
+    B --> C[Resolve structured prereqTree or fallback text]
     C --> D{Has prerequisites?}
     D -- No --> E[Return leaf node]
     D -- Yes --> F[Add prerequisite nodes]
@@ -1028,8 +967,8 @@ Used to build the Unlocks View.
 
 ```mermaid
 flowchart TD
-    A[Start with selected module] --> B[Build reverse dependency map]
-    B --> C[Find modules that require selected module]
+    A[Start with selected module] --> B[Read fulfillRequirements]
+    B --> C[Fetch directly unlocked modules]
     C --> D[Add unlock nodes]
     D --> E[Add edges from selected module]
     E --> F[Continue BFS through unlocked modules]
@@ -1058,7 +997,7 @@ NUS-Tree is divided into clear layers:
 
 4. **Testing Layer**
 
-   Validates the correctness of each layer through unit, component, and end-to-end tests.
+   Uses API unit tests and Playwright smoke tests; dedicated component coverage is planned.
 
 This separation makes the system easier to maintain and test.
 
@@ -1066,19 +1005,17 @@ This separation makes the system easier to maintain and test.
 
 ## 2. Separation of Concerns
 
-Each module has a narrow responsibility, as such, we organise the files by reponsibility:
+Each module has a narrow responsibility, so files are organised by responsibility:
 
 
-| File / Component     | Responsibility                                   |
-| -------------------- | ------------------------------------------------ |
-| `nusmods.ts`         | Fetch data from NUSMods API                      |
-| `normalizeModule.ts` | Convert raw API response into internal format    |
-| `prereqParser.ts`    | Parse prerequisite text                          |
-| `graphBuilder.ts`    | Convert prerequisites into graph nodes and edges |
-| `unlocksBuilder.ts`  | Build reverse dependency graph                   |
-| `GraphCanvas.tsx`    | Render graph using React Flow                    |
-| `ModuleSearch.tsx`   | Handle module search input                       |
-| `planValidator.ts`   | Validate imported plans against prerequisites    |
+| File / Component       | Responsibility                                      |
+| ---------------------- | --------------------------------------------------- |
+| `app/api/module/route.js` | Fetch and normalize NUSMods module data          |
+| `hooks/usePrereqTree.js`  | Resolve prerequisite/unlock trees and build graphs |
+| `lib/treeLayout.js`       | Arrange, align, and shuffle graph nodes           |
+| `lib/treeStorage.js`      | Persist, export, import, and validate plans        |
+| `app/Tree/page.js`        | Coordinate the React Flow planning workspace       |
+| `StudyPlanModal.js`       | Summarise semesters and display planning warnings  |
 
 ---
 
@@ -1086,7 +1023,7 @@ Each module has a narrow responsibility, as such, we organise the files by repon
 
 The prerequisite parser is one of the highest-risk parts of the project because prerequisite strings may contain ambiguous natural language and logical conditions.
 
-Therefore, we will use a test-first approach for parser development.
+Structured prerequisite resolution is implemented, but dedicated resolver coverage remains planned.
 
 Before implementing a parser case, we will define expected outputs for examples such as:
 
@@ -1132,11 +1069,11 @@ Branching rules:
 
 # Testing Plan
 
-NUS-Tree uses a three-layer testing strategy:
+NUS-Tree currently uses two automated testing layers, with component tests planned:
 
-1. Unit testing with Jest
-2. Component testing with React Testing Library
-3. End-to-end testing with Playwright
+1. Unit testing with Node's built-in test runner
+2. End-to-end smoke testing with Playwright
+3. Planned component testing with React Testing Library
 
 ---
 
@@ -1144,8 +1081,8 @@ NUS-Tree uses a three-layer testing strategy:
 
 ```mermaid
 flowchart TB
-    A[Unit Tests - Jest] --> D[Confidence in Logic]
-    B[Component Tests - React Testing Library] --> E[Confidence in UI]
+    A[Unit Tests - node:test] --> D[Confidence in API logic]
+    B[Planned Component Tests] --> E[Confidence in UI]
     C[E2E Tests - Playwright] --> F[Confidence in User Flow]
 
     D --> G[Safe Pull Request]
@@ -1156,9 +1093,11 @@ flowchart TB
 
 ---
 
-## Unit Testing: Jest
+## Planned Unit Coverage
 
-### Component 1: `normalizeModule.ts`
+The current unit suite covers normalization and API-route errors in `tests/unit/moduleRoute.test.js`. The matrices below describe additional planned coverage.
+
+### Component 1: Module API Route
 
 | Test Case             | Input                             | Expected Result          | Pass Criteria             |
 | --------------------- | --------------------------------- | ------------------------ | ------------------------- |
@@ -1167,17 +1106,17 @@ flowchart TB
 | Missing semester data | Incomplete semester data          | Empty or fallback value  | Still works               |
 | Invalid structure     | Malformed object                  | Error or safe fallback   | Error handled gracefully  |
 
-### Component 2: `prereqParser.ts`
+### Component 2: Prerequisite Resolver
 
-| Test Case        | Input                           | Expected Result  | Pass Criteria               |
-| ---------------- | ------------------------------- | ---------------- | --------------------------- |
-| Simple module    | `CS2040`                        | ModuleNode       | AST matches expected output |
-| AND condition    | `CS2040 and CS2100`             | AndNode          | Both children parsed        |
-| OR condition     | `CS2040 or CS2040S`             | OrNode           | Alternatives parsed         |
-| Nested condition | `CS2040 and (CS2100 or EE2024)` | Nested AST       | Parentheses preserved       |
-| Invalid syntax   | Unknown text                    | Fallback display | No crash                    |
+| Test Case        | Input                              | Expected Result   | Pass Criteria             |
+| ---------------- | ---------------------------------- | ----------------- | ------------------------- |
+| Simple module    | `CS2040`                           | Required leaf     | Module is included        |
+| AND condition    | `{ and: [...] }`                   | All children      | Every child is included   |
+| OR condition     | `{ or: [...] }`                    | Selected option   | Choice is preserved       |
+| Nested condition | `{ and: [code, { or: [...] }] }`   | Grouped result    | Nesting remains accurate  |
+| Missing tree     | Free-text prerequisite             | Fallback modules  | Resolver does not crash   |
 
-### Component 3: `graphBuilder.ts`
+### Component 3: Prerequisite Graph Traversal
 
 | Test Case              | Input                     | Expected Result        | Pass Criteria      |
 | ---------------------- | ------------------------- | ---------------------- | ------------------ |
@@ -1187,7 +1126,7 @@ flowchart TB
 | Empty prerequisite     | Module with no prereq     | One node               | No orphan edges    |
 | Recursive graph        | Multi-level chain         | Full chain rendered    | Correct depth      |
 
-### Component 4: `unlocksBuilder.ts`
+### Component 4: Unlocks Traversal
 
 | Test Case       | Input                          | Expected Result           | Pass Criteria                |
 | --------------- | ------------------------------ | ------------------------- | ---------------------------- |
@@ -1196,7 +1135,7 @@ flowchart TB
 | No unlocks      | Module not required elsewhere  | Single node / empty graph | No false modules             |
 | Duplicate paths | Multiple routes to same module | One module node           | Deduplication works          |
 
-### Component 5: `planValidator.ts`
+### Component 5: Plan Import and Validation
 
 | Test Case            | Input                               | Expected Result   | Pass Criteria             |
 | -------------------- | ----------------------------------- | ----------------- | ------------------------- |
@@ -1207,7 +1146,7 @@ flowchart TB
 
 ---
 
-## Component Testing: React Testing Library
+## Planned Component Testing: React Testing Library
 
 ### Component 1: `ModuleSearch`
 
@@ -1251,6 +1190,8 @@ flowchart TB
 ---
 
 ## End-to-End Testing: Playwright
+
+The current suite contains navigation and workspace smoke tests. The feature-specific scenarios below remain planned.
 
 ### E2E Test 1: Valid Module Search
 
@@ -1334,7 +1275,6 @@ NUS-Tree uses GitHub Actions for CI and Vercel for deployment.
 
 The goal of CI/CD is to ensure that all code merged into the main branch is:
 
-* Linted
 * Tested
 * Buildable
 * Reviewable
@@ -1349,12 +1289,11 @@ flowchart TD
     A[Developer pushes feature branch] --> B[Open Pull Request]
     B --> C[GitHub Actions Triggered]
     C --> D[Install Dependencies]
-    D --> E[Run ESLint]
-    E --> F[Run Jest Unit Tests]
-    F --> G[Run React Testing Library Tests]
+    D --> E[Run node:test Unit Tests]
+    E --> F[Run Next.js Build]
+    F --> G[Install Chromium]
     G --> H[Run Playwright E2E Tests]
-    H --> I[Run Next.js Build]
-    I --> J{All Checks Pass?}
+    H --> J{All Checks Pass?}
     J -- No --> K[Block Merge]
     J -- Yes --> L[Peer Review]
     L --> M{Approved?}
@@ -1368,47 +1307,19 @@ flowchart TD
 ## GitHub Actions Workflow
 
 The repository includes a CI workflow at `.github/workflows/ci.yml`.
-The current workflow runs the checks available in `package.json`:
+The current workflow runs:
 
 * Install dependencies with `npm ci`.
+* Run unit tests with `npm run test`.
 * Build the Next.js app with `npm run build`.
+* Install Chromium and run `npm run test:e2e`.
 
-After linting and testing tools are added to the project, expand the workflow with the planned checks:
-
-* `npm run lint`
-* `npm run test`
-* `npm run test:e2e`
-
-```yaml
-name: CI
-
-on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build project
-        run: npm run build
+```bash
+npm ci
+npm run test
+npm run build
+npx playwright install --with-deps chromium
+npm run test:e2e
 ```
 
 ---
@@ -1417,7 +1328,11 @@ jobs:
 
 # Milestone Scope
 
+These scopes are retained as project history; current implementation status is summarized in the Feature Overview.
+
 ## Milestone 1: Technical Proof of Concept
+
+Status: complete.
 
 Expected scope:
 
@@ -1431,6 +1346,8 @@ Expected scope:
 
 ## Milestone 2: Prototype
 
+Status: complete, with broader automated coverage still being expanded.
+
 Expected scope:
 
 * Recursive dependency graph
@@ -1441,9 +1358,11 @@ Expected scope:
 
 ## Milestone 3: Extended System
 
+Status: in progress. Logic resolution, plan import, and semester planning are implemented; recommendations and full planned coverage remain.
+
 Expected scope:
 
-* Logic parser
+* Logic resolver
 * NUSMods JSON import
 * Semester availability overlay
 * Path recommendation engine
@@ -1455,16 +1374,16 @@ Expected scope:
 
 | Risk                                        | Impact | Mitigation                                                 |
 | ------------------------------------------- | ------ | ---------------------------------------------------------- |
-| Prerequisite strings are difficult to parse | High   | Start with simple parser, then expand to AST parser        |
+| Structured prerequisite data may be absent  | High   | Fall back to conservative module-code extraction           |
 | Graph becomes too large                     | Medium | Use collapsing, lazy loading, and memoization              |
 | NUSMods API response changes                | Medium | Use normalization layer to isolate API changes             |
 | Recursive traversal becomes slow            | Medium | Use caching and visited sets                               |
-| Unlocks View requires scanning many modules | High   | Precompute reverse dependency map where possible           |
+| Unlock data depends on upstream accuracy    | Medium | Use NUSMods `fulfillRequirements` and handle empty results  |
 | JSON import format is inconsistent          | Medium | Validate schema and provide user-friendly errors           |
-| Testing takes too long to set up            | Medium | Start with Jest, then add RTL and Playwright progressively |
+| Feature coverage remains incomplete         | Medium | Expand node:test and Playwright coverage progressively      |
 | Team falls behind timeline                  | Medium | Track progress weekly and adjust scope early               |
 
---
+---
 
 # Setup Instructions
 
@@ -1486,7 +1405,7 @@ cd NUS-Tree
 ## Install Dependencies
 
 ```bash
-npm install
+npm ci
 ```
 
 ## Run Development Server
@@ -1511,17 +1430,9 @@ http://localhost:3000
 npm run build
 ```
 
-## Planned Testing Commands
+## Testing Commands
 
-These commands are part of the testing plan. Add the matching npm scripts and dependencies before enabling them in GitHub Actions.
-
-### Run Linting
-
-```bash
-npm run lint
-```
-
-### Run Unit and Component Tests
+### Run Unit Tests
 
 ```bash
 npm run test
@@ -1530,5 +1441,6 @@ npm run test
 ### Run End-to-End Tests
 
 ```bash
+npx playwright install chromium
 npm run test:e2e
 ```

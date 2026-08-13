@@ -307,6 +307,17 @@
       height: 22px;
       background: #c9c9c9;
     }
+    @media (min-width: 3000px) {
+      html, body {
+        width: 3508px;
+        height: 4967px;
+        overflow: hidden;
+      }
+      .poster {
+        transform-origin: top left;
+        transform: scale(1.4714765101, 1.4738872404);
+      }
+    }
   </style>
 </head>
 <body>
@@ -334,7 +345,7 @@
     </div>
     <h1>NUS-TREE</h1>
     <div class="byline">By: Arav Cabral & Raghuveer Singh</div>
-    <p class="subtitle">A visual degree planner for NUS students. The current build maps live prerequisite data, preserves alternative paths, and checks a four-year semester plan.</p>
+    <p class="subtitle">A visual degree planner for NUS students. Map prerequisites, discover what each module unlocks, import a NUSMods plan, and validate semester order.</p>
   </header>
 
   <section class="grid">
@@ -345,37 +356,37 @@
 
     <article class="card orange">
       <h2>Current Solution</h2>
-      <p>NUS-Tree turns a degree plan into one editable graph. Students can load one or more target modules from NUSMods, choose between valid prerequisite alternatives, combine the results with templates or manual modules, assign semesters, and check the plan before registration.</p>
+      <p>NUS-Tree turns degree planning into one editable graph. Students can explore module paths in both directions, choose valid prerequisite alternatives, combine several goals, import an existing NUSMods timetable, and identify missing or mistimed prerequisites before registration.</p>
     </article>
 
     <article class="card green span2">
       <span class="note">What is actually working right now</span>
-      <p class="explain">The app reads NUSMods' structured prerequisite tree, preserves AND, OR, and “n of” rules, asks the student which valid alternative they plan to take, and merges every resolved dependency into a persistent React Flow canvas.</p>
+      <p class="explain">The app reads live NUSMods module relationships in either direction. It builds prerequisite trees with AND, OR, and “n of” choices, builds reverse Unlocks trees from fulfilment data, and converts imported NUSMods timetables into validated study-plan graphs.</p>
       <div class="flow">
-        <div class="step">Enter one or more targets</div>
+        <div class="step">Choose Prerequisites / Unlocks</div>
         <div class="step">Fetch live NUSMods data</div>
-        <div class="step">Resolve AND / OR / n-of</div>
-        <div class="step">Merge + auto-arrange</div>
-        <div class="step">Assign semesters + validate</div>
+        <div class="step">Build recursive graph</div>
+        <div class="step">Import NUSMods plan</div>
+        <div class="step">Validate semester order</div>
       </div>
     </article>
 
     <article class="card white span2">
-      <h2>Tested UI Flows: Build, Combine, Validate</h2>
-      <p class="explain">These captured UI scenarios show the current planner working end to end: combining multiple targets, preserving prerequisite meaning, and turning the canvas into a checked four-year study plan.</p>
+      <h2>Tested UI Flows: Discover, Import, Validate</h2>
+      <p class="explain">The latest UI tests demonstrate the two new planning workflows alongside the existing prerequisite engine: discovering future modules and checking an imported NUSMods timetable.</p>
       <div class="ui-gallery">
         <figure class="ui-shot ui-main">
-          <img src="../output/playwright/issue-8-multi-tree.png" alt="Two target modules combined into one NUS-Tree canvas" />
-          <figcaption><b>1 · Combine goals</b> — load CS3210 and CS4248 together, merge shared prerequisites, and keep both targets visible.</figcaption>
+          <img src="../output/playwright/unlocks-view.png" alt="NUS-Tree Unlocks view showing modules opened by CS1010S" />
+          <figcaption><b>1 · Discover what comes next</b> — switch to Unlocks and expand modules that CS1010S enables, including later descendants.</figcaption>
         </figure>
         <div class="ui-stack">
           <figure class="ui-shot">
-            <img src="../output/playwright/prerequisite-rules.png" alt="Solid and dashed prerequisite rules on the NUS-Tree canvas" />
-            <figcaption><b>2 · Preserve meaning</b> — solid links mean ALL required; dashed links mean ANY one.</figcaption>
+            <img src="../output/playwright/nusmods-plan-import.png" alt="Imported NUSMods timetable shown as a four-year study plan with a warning" />
+            <figcaption><b>2 · Import + check</b> — turn NUSMods JSON into semester nodes and flag prerequisites missing from earlier terms.</figcaption>
           </figure>
           <figure class="ui-shot">
-            <img src="../output/playwright/semester-study-plan.png" alt="Four-year study plan showing semester and prerequisite warnings" />
-            <figcaption><b>3 · Validate the plan</b> — flag semester availability and prerequisite-order warnings.</figcaption>
+            <img src="../output/playwright/prerequisite-rules.png" alt="Solid and dashed prerequisite rules on the NUS-Tree canvas" />
+            <figcaption><b>3 · Preserve prerequisite meaning</b> — solid links mean ALL required; dashed links mean ANY one.</figcaption>
           </figure>
         </div>
       </div>
@@ -385,7 +396,7 @@
       <div class="strip">
         <div>
           <h2>Built So Far</h2>
-          <p>Live NUSMods lookup now powers multi-target prerequisite trees with guided alternative choices. Students can edit and colour nodes, add notes and links, load templates, save automatically, import or export JSON, arrange the graph three ways, and review a validated four-year study plan.</p>
+          <p>Live NUSMods data now powers prerequisite and Unlocks trees, guided alternative choices, multi-target planning, and NUSMods timetable import. Students can edit and colour nodes, add notes, load templates, save automatically, import/export JSON, arrange the graph, and review a validated four-year plan.</p>
         </div>
         <div class="tech">
           <span class="pill">Next.js</span>
@@ -400,28 +411,28 @@
       <div class="mini">
         <h3>What changed</h3>
         <ul>
-          <li><b>Prerequisite meaning:</b> structured AND, OR, and “n of” groups are preserved and shown as solid or dashed links.</li>
-          <li><b>Multiple goals:</b> several target codes can be loaded and merged into the same planning canvas.</li>
-          <li><b>Planning tools:</b> improved Auto Arrange, grid alignment, shuffle, styling, notes, and manual connections.</li>
-          <li><b>Save + reuse:</b> local persistence, JSON import/export, clear-tree controls, and a template gallery.</li>
+          <li><b>Unlocks mode:</b> switch direction to recursively show modules enabled by the selected starting module.</li>
+          <li><b>NUSMods import:</b> timetable JSON becomes semester-assigned module nodes and dependency links.</li>
+          <li><b>Import validation:</b> unmet earlier prerequisites produce red nodes and study-plan warnings.</li>
+          <li><b>Dual import:</b> the same menu accepts NUS-Tree exports or NUSMods timetable JSON.</li>
         </ul>
       </div>
       <div class="mini">
         <h3>Testing + CI</h3>
         <ul>
-          <li><b>Prerequisite rules:</b> UI checks show solid ALL-required links and dashed ANY-one alternatives.</li>
-          <li><b>Multi-target merge:</b> test scenarios combine two goals while reusing shared dependency nodes.</li>
-          <li><b>Plan validation:</b> captured warnings cover unavailable semesters and prerequisites scheduled too late.</li>
+          <li><b>Unlocks traversal:</b> UI coverage verifies future-module edges and recursive descendants.</li>
+          <li><b>Plan import:</b> a captured NUSMods timetable is converted into a four-year plan.</li>
+          <li><b>Prerequisite rules:</b> UI checks still cover ALL-required and ANY-one link semantics.</li>
           <li><b>CI workflow:</b> GitHub Actions runs API tests, the production build, and Playwright browser checks.</li>
         </ul>
       </div>
       <div class="mini">
         <h3>Known limits + next</h3>
         <ul>
-          <li><b>Unlocks View:</b> reverse the graph to show which future modules a completed module opens up.</li>
-          <li><b>NUSMods plan import:</b> accept a NUSMods study plan directly, beyond NUS-Tree's own JSON format.</li>
-          <li><b>Richer validation:</b> cover workload, degree requirements, and more complex prerequisite conditions.</li>
+          <li><b>Degree requirements:</b> validate programme, major, minor, and specialisation rules.</li>
+          <li><b>Workload checks:</b> surface overloaded semesters and credit shortfalls.</li>
           <li><b>Recommendations:</b> suggest alternative modules and paths when a preferred option is unavailable.</li>
+          <li><b>Import breadth:</b> support more NUSMods export variants and richer plan metadata.</li>
         </ul>
       </div>
     </article>
@@ -429,11 +440,11 @@
     <article class="span2 roadmap">
       <div class="road teal">
         <h3>Why this helps now</h3>
-        <p>Students can answer “What do I need before these modules, which valid path will I take, and does my semester order work?” in one place. The canvas remains editable, so the generated tree becomes a personal degree roadmap rather than a static lookup.</p>
+        <p>Students can now answer “What do I need first?”, “What will this module unlock?”, and “Does my existing NUSMods plan satisfy the path?” in one place. The imported or generated graph stays editable, becoming a personal degree roadmap rather than a static lookup.</p>
       </div>
       <div class="road orange">
         <h3>Next build target</h3>
-        <p>The next step is a true post-requisite “Unlocks” view, followed by direct NUSMods plan import and broader degree checks. Together, these would help students see both where they can go next and whether their full plan satisfies the path.</p>
+        <p>The next target is broader degree validation: workload, programme requirements, minors, and specialisations. After that, NUS-Tree can recommend alternative routes when a module is unavailable or a prerequisite chain no longer fits the student's timeline.</p>
       </div>
     </article>
   </section>
